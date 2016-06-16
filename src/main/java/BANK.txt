@@ -1,0 +1,22 @@
+<green>--------------------------------------------
+<green>         AIDE - ECNONOMIE / BANK
+<green>--------------------------------------------
+<yellow>- <gras>Quelle est la monaie officielle ?
+<gray>La monaie du jeu est la m<e_cir>me que Minecraft c'est <a_gr> dire l'<yellow><gras>Emeraude
+<gray>Tu va donc pouvoir naturellement la trouver en minant et en trocant avec les villageois
+<yellow>- <gras>Ou sont stock<e_ai> mes Emeraudes ?
+<gray>Comme dans la vrai vie, tu peut avoir ta monaie (Emeraudes) sur toi (ton inventaire)
+<gray>Mais tu peux aussi la mettre chez toi dans des coffres ou bien la d<e_ai>poser sur un compte en banque
+<yellow>- <gras>Comment je depose mes Emeraudes dans une banque ?
+<gray>Il te suffit de mettre dans ta main les Emeraudes <a_gr> d<e_ai>poser
+<gray>Puis tu tapes la commande <yellow>/bank depot
+<yellow>- <gras>Comment je retire des Emeraudes de la banque ?
+<gray>Puis tu tapes la commande <yellow>/bank retrait <aqua>[somme]
+<gray>Tu remplaces [somme] par le nombre d'Emeraudes <a_gr> retirer
+<yellow>- <gras>Combien j'ai d'Emeraudes sur ma banque ?
+<gray>Puis tu tapes la commande <yellow>/bank <gray>pour connaitre l'<e_ai>tat de ton compte
+<yellow>- <gras>y a t-il d'autre facon de gagner des Emeraudes ?
+<gray>Tu peux faire du Troc comme les villageois, va au commerce TROC du LOBBY pour +d'info
+<gray>Tu peux en gagner en accomplissant les succes de Minecraft
+<gray>Tu peux en gagner en developpant un metier (mineur, bucheron, eleveur, etc...)
+<aqua>Tu trouvera toutes les infos d'aide sur http://mc.teraoctet.net rubrique "Guide"

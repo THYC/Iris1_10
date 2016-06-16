@@ -1,0 +1,535 @@
+name: Iris
+version: 1.9.0
+main: net.teraoctet.iris.Iris
+commands:
+  pos:
+    description: Affiche votre position ou vous téléporte à une autre.
+    usage: /<command>
+  day:
+    description: Programme le jour dans le monde en cours
+    usage: /<command>
+  night:
+    description: Programme la nuit dans le monde en cours
+    usage: /<command>
+  fly:
+    description: active ou désactive la commande vol
+    usage: /<command>
+  sun:
+    description: Programme le soleil sur le monde en cours
+    usage: /<command>
+  playeffect:
+    description: Met un effet sur le joueur
+    aliases: [pe]
+    usage: /<command>
+  tp:
+    description: téléporte sur un joueur ou sur une adresse x y z 
+    usage: |
+           /<command> player - Téléporte sur 'player'
+           /<command> player [otherplayer] - Téléporte 'player sur 'otherplayer'
+           /<command> x y z - Téléporte aux coordonnées X, Y, Z
+  ci:
+    description: Supprime l'inventaire 
+    usage: /<command> [otherplayer] [Materiel]
+  plugin:
+    description: gestion plugin 
+    usage: |
+            /<command> reload [plugin]
+            /<command> load [plugin]
+            /<command> unload [plugin]
+            /<command> enable [plugin]
+            /<command> disable [plugin]
+  tracker:
+    description: donne un tracker 
+    usage: /<command>
+  back:
+    description: téléporte aux coordonnées précédente 
+    usage: /<command>
+  invsee:
+    description: ouvre l'inventaire d'un joueur
+    usage: /<command> <player>
+  kill:
+    description: Tue un joueur
+    usage: /<command> <player>
+  warp:
+    description: point de téleportation
+    usage: /<command> <nameWarp>
+  setwarp:
+    description: enregistre un point de téleportation
+    usage: /<command>
+  spawn:
+    description: commande spawn
+    usage: |
+           /<command> - Téléporte au spawn du monde actuel
+           /<command> [worldName] - Téléporte au spawn du monde demandé
+  bank:
+    description: gestion bank
+    usage: |
+           /<command> - pour consulter le solde d'emeraude sur votre compte
+           /<command> depot [nb_emeraude] - dépot d'emeraude sur votre compte
+           /<command> retrait [nb_emeraude] - retrait d'emeraude de votre compte
+  lobby:
+    description: Téléporte au spawn du lobby
+    usage: /<command> - Téléporte au spawn du lobby
+  print:
+    description: modifie le texte d'un panneau
+    usage: /<command> [ligne] [texte] - modifie le texte d'un panneau
+  troc:
+    description: Declare un troc de commerce
+    usage: /<command> [achat|vente] [PRIX] - Affiche le type de commerce et le prix
+  trocpublic:
+    description: Declare un troc de commerce public
+    usage: /<command> [achat|vente] [PRIX] - Affiche le type de commerce et le prix
+  playerinfo:
+    description: renvoie des infos sur le joueur
+    usage: /<command>
+  infobook:
+    description: Book règlement
+    aliases: [book]
+    usage: |
+           /<command> [BookName] - drop le book demandé
+           /<command> list - Liste les books disponible
+  home:
+    description: teleporte au home
+    usage: |
+           /<command> - Téléporte au home par default
+           /<command> [homename] - Téléporte sur les homes supplémentaire
+  sethome:
+    description: définit un home
+    usage: |
+           /<command> - définit le home par default
+           /<command> [homename] - définit les homes supplémentaire
+  setspawn:
+    description: définit le spawn
+    usage: /<command>
+  grave:
+    description: administration des Tombes
+    usage: |
+           /<command> clear - efface tous les inventaires
+           /<command> info - renvoie le nombre d'inventaire actif
+  delock:
+    description: débloque ton compte
+    usage: /<command> [password]
+    aliases: [dlock, dl]
+  y:
+    description: Chat privé avec sa horde
+    usage: /<command> [message]
+  yh:
+    description: Chat privé avec sa horde et une autre horde
+    usage: /<command> [horde] [message]
+  lo:
+    description: bloque ton compte
+    usage: /<command> [password]
+  lock:
+    description: verouille un conteneur
+    usage: /<command> [password]
+  mf:
+    description: Affiche le tag d'une entite invisible
+    usage: /<command> [message]
+    aliases: [msgfloat]
+  spawner:
+    description: Modifie ou donne un Mobspawner
+    usage: |
+            /<command> set [CreatureSpawner] - Modifie le type d'un Mobspawner
+            /<command> [CreatureSpawner] - Donne un Mobspawner
+  head:
+    description: donne un MHF
+    usage: |
+            /<command> [nom_du_mhf]
+  qg:
+    description: TP au QG
+    usage: |
+            /<command>
+  horde:
+    description: Gestion des Hordes
+    usage: |
+            /<command> create [nom_de_la_horde]
+            /<command> del [nom_de_la_horde]
+    aliases: [hor, h]
+  claim:
+    description: Gestion des Hordes
+    usage: |
+            /<command> create [nom_de_la_horde]
+            /<command> del [nom_de_la_horde]
+  reload:
+    description: reload le serveur
+    usage: /<command>
+  give:
+    description: donne un item
+    usage: /<command>
+  register:
+    description: enregistrement nouveau joueur
+    aliases: [reg]
+  passchange:
+    description: modifie ton mot de passe
+  test:
+    description: test
+  scoreboard:
+    description: test
+  am:
+    description: gestion AutoMessage
+    usage: |
+           /<command> add [NomDuGroupeMessage] [N°deLigne] [Message] - ajoute une ligne de message
+           /<command> addgroupe [NomDuGroupeMessage] [permission] [actif] - ajoute un groupe/entête de message
+           /<command> update [NomDuGroupeMessage] [N°deLigne] [Message] - met à ajour une ligne de message
+           /<command> del [NomDuGroupeMessage] - supprime la totalité du groupe de message
+           /<command> list - liste les groupes de messages
+           /<command> list [NomDuGroupeMessage] - liste le contenu du groupe de message
+           /<command> off [NomDuGroupeMessage] - désactive le groupe de message
+           /<command> on [NomDuGroupeMessage] - active le groupe de message
+           /<command> run - démarre MessageAuto
+           /<command> stop - stop MessageAuto
+  portal:
+    description: administration des portails
+    aliases: [p]
+    usage: |
+           /<command> add [portalName] [book] [message] - ajoute un portail avec book et message
+           /<command> add [portalName] [message] - ajoute un portail avec message
+           /<command> add [portalName] - ajoute un portail
+           /<command> loc [portalName] - met à jour les coordonnées du portail
+           /<command> book [portalName] [book] - livre donner au franchissement du portail
+           /<command> message [portalName] [message] - message affiché au franchissement du portail
+           /<command> to [portalName] - enregistre la destination du portail
+  parcelle:
+    description: gestion des parcelles
+    aliases: [parc]
+    usage: |
+           /<command> add [parcelleName] - Enregistre la parcelle
+           /<command> addplayer [joueur] - Ajoute un habitant sur la parcelle
+           /<command> delplayer [parcelle] [joueur] - supprime un habitant sur la parcelle
+           /<command> avendre [prix] - Pose un panneaux de vente de la parcelle
+           /<command> reload - Recharge les donnees parcelle
+  world:
+    description: gestion des mondes
+    aliases: [wd]
+    usage: |
+           /<command> create [worldName] [type] - Cree un monde
+           /<command> import [worldName] [type] - Importe un monde
+           /<command> remove [worldName] - Supprime un monde
+           /<command> reset [worldName] - Recharge les mondes
+           /<command> list - Liste des mondes
+           /<command> tp [worldName] - Teleporte sur un monde
+           /<command> flag [worldName] [flag] [deny|allow] - Enregistre un flag
+  border:
+    description: delimite les bordures des map a ne pas franchir
+    aliases: [wb]
+    usage: |
+           /<command> - Liste des commandes
+           /<command> <set>
+           /<command> set <radiusX> [radiusZ] - definit la bordure dans un rayon dont vous etes le centre.
+           /<command> [world] set <radiusX> [radiusZ] <x> <z> - definit la bordure dans un rayon dont vous etes le centre.
+           /<command> [world] radius <radiusX> [radiusZ] - change le rayon de la bordure
+           /<command> [world] clear - Supprime la bordure de ce monde
+           /<command> clear all - Supprime toutes les bordures
+           /<command> list - Liste de la totalité des bordures
+           /<command> shape <elliptic|rectangular> - definit la forme par defaut.
+           /<command> shape <round|square> - same as above, backwards compatible.
+           /<command> getmsg - envoie le message par defaut.
+           /<command> setmsg <text> - definit le message par defaut.
+           /<command> knockback <distance> - distance de renvoie lors du franchissement
+           /<command> whoosh <on/off> - on-off des effets de franchissement
+           /<command> portal <on/off> - on-off renvoie au coordonnees opposees
+           /<command> delay <amount> - timer :delais de controle.
+           /<command> wshape [world] <elliptic|rectangular|default> - definit la forme par defaut.
+           /<command> wshape [world] <round|square|default> - definit la forme par defaut.
+           /<command> wrap [world] <on/off> - can make border crossings wrap around.
+           /<command> [world] fill [freq] [pad] [force] - generate world to border.
+           /<command> [world] trim [freq] [pad] - trim world outside of border.
+           /<command> bypass [player] [on/off] - let player go beyond border.
+           /<command> bypasslist - list players with border bypass enabled.
+           /<command> remount <amount> - delay before remounting after knockback.
+           /<command> fillautosave <seconds> - world save interval for Fill process.
+  tpa:
+    description: envoie une demande de teleportation
+    usage: /<command> <player>
+  tphere:
+    description: demande de requete de teleportion d'un joueur sur vous
+    usage:  /<command> <player>
+  tpaccept:
+    description: accepte la demande de teleportation
+    usage:  /<command>
+  tpdeny:
+    description: refuse la demande de teleportation
+    usage:  /<command>
+  iris:
+    description: Aide Iris
+    usage:  /<command>
+  1:
+    description: Commande
+    usage:  /<command>
+  2:
+    description: Etabli
+    usage:  /<command>
+  3:
+    description: Table enchant
+    usage:  /<command>
+  pack:
+    description: Change le pack texture
+    usage:  /<command>
+  jail:
+    description: Emprisonne un joueur
+    usage:  /<command> [player] [jailName]
+  dejail:
+    description: De-emprisonne un joueur
+    usage:  /<command> [player]
+  setjail:
+    description: Declare un jail
+    usage:  /<command> [jailName]
+permissions:
+    iris.nameplates.vip:
+        default: false
+    iris.nameplates.premium:
+        default: false
+    iris.nameplates.staff:
+        default: false
+    iris.weather.*:
+        description: Donne les droits à toutes les commandes du temps
+        children:
+            iris.weather.day: true
+            iris.weather.night: true 
+            iris.weather.sun: true
+            iris.weather.rain: true
+    iris.home.multiple:
+        default: op
+    iris.home: 
+        default: false
+    iris.sethome: 
+        default: false
+    iris.sethome.multiple: 
+        default: op 
+    iris.player.infobook: 
+        default: true   
+    iris.pos:
+        default: op
+    iris.fly:
+        default: op
+    iris.playeffect:
+        default: op
+    iris.tp:
+        default: op
+    iris.ci:
+        default: op
+    iris.back:
+        default: op
+    iris.invsee:
+        default: op
+    iris.kill:
+        default: op
+    iris.gamemode:
+        default: op
+    iris.warp:
+        default: op
+    iris.setwarp:
+        default: op
+    iris.spawn:
+        default: true
+    iris.spawn.multiple:
+        default: op
+    iris.setspawn:
+        default: op
+    iris.playerinfo:
+        default: op
+    iris.border.*:
+        description: Grants all WorldBorder permissions
+        children:
+            iris.border.set: true
+            iris.border.radius: true
+            iris.border.clear: true
+            iris.border.list: true
+            iris.border.shape: true
+            iris.border.getmsg: true
+            iris.border.setmsg: true
+            iris.border.reload: true
+            iris.border.debug: true
+            iris.border.knockback: true
+            iris.border.delay: true
+            iris.border.wshape: true
+            iris.border.fill: true
+            iris.border.trim: true
+            iris.border.whoosh: true
+            iris.border.bypass: true
+            iris.border.bypasslist: true
+            iris.border.wrap: true
+            iris.border.portal: true
+            iris.border.remount: true
+            iris.border.fillautosave: true
+    iris.border.set:
+        description: Can set borders for any world
+        default: op
+    iris.border.radius:
+      description: Can set the radius of an existing border
+      default: op
+    iris.border.clear:
+      description: Can remove any border
+      default: op
+    iris.border.list:
+      description: Can view a list of all borders
+      default: op
+    iris.border.shape:
+      description: Can set the default shape (round or square) for all borders
+      default: op
+    iris.border.getmsg:
+      description: Can view the border crossing message
+      default: op
+    iris.border.setmsg:
+      description: Can set the border crossing message
+      default: op
+    iris.border.reload:
+      description: Can force the plugin to reload from the config file
+      default: op
+    iris.border.debug:
+      description: Can enable/disable debug output to console
+      default: op
+    iris.border.knockback:
+      description: Can set the knockback distance for border crossings
+      default: op
+    iris.border.delay:
+      description: Can set the frequency at which the plugin checks for border crossings
+      default: op
+    iris.border.wshape:
+      description: Can set an overriding border shape for a single world
+      default: op
+    iris.border.wrap:
+      description: Can set border crossings to wrap around to the other side of the world
+      default: op
+    iris.border.fill:
+      description: Can fill in (generate) any missing map chunks out to the border
+      default: op
+    iris.border.trim:
+      description: Can trim (remove) any excess map chunks outside of the border
+      default: op
+    iris.border.whoosh:
+      description: Can enable/disable "whoosh" knockback effect
+      default: op
+    iris.border.portal:
+      description: Can enable/disable portal redirection to be inside border
+      default: op
+    iris.border.remount:
+      description: Can set the delay before remounting a player to their vehicle after knockback
+      default: op
+    iris.border.fillautosave:
+      description: Can set the world save interval for the Fill process
+      default: op
+    iris.border.bypass:
+      description: Can enable bypass mode to go beyond the border
+      default: op
+    iris.border.bypasslist:
+      description: Can get list of players with border bypass enabled
+      default: op
+    iris.grave.clear:
+      description: efface tous les inventaires actifs
+      default: op
+    iris.grave.info:
+      description: renvoie le nombre d'inventaire actif
+      default: op
+    iris.grave.place:
+      description: genere une tombe à la mort
+      default: op
+    iris.grave.pillage:
+      description: autorise le pillage des tombes
+      default: op
+    iris.portal.admin.add:
+      description: ajoute un portail
+      default: op
+    iris.portal.admin.book:
+      description: ajoute un portail
+      default: op
+    iris.portal.admin.message:
+      description: ajoute un portail
+      default: op
+    iris.portal.tp:
+      description: teleporte
+      default: true
+    iris.automessage.admin:
+      description: administration automessage
+    iris.automessage.receive:
+      default: op
+    iris.tpa:
+      description: teleporte
+      default: true
+    iris.tphere:
+      description: teleporte
+      default: true
+    iris.tpaccept:
+      description: teleporte
+      default: true
+    iris.tpdeny:
+      description: teleporte
+      default: true
+    iris.spawner:
+      description: modifie le type d'un Mobspawner
+      default: op
+    iris.reload:
+      description: reload le serveur
+      default: op
+    iris.head:
+      description: reload le serveur
+      default: op
+    iris.parcelle.add:
+      description: enregistre la parcelle
+      default: true
+    iris.parcelle.addplayer:
+      description: ajoute un joueur sur la parcelle
+      default: true
+    iris.parcelle.avendre:
+      description: met en vente la parcelle
+      default: true
+    iris.parcelle.reload:
+      description: recharge les donnees parcelles
+      default: op
+    iris.troc:
+      description: enregistre un commerce
+      default: true
+    iris.troc.public:
+      description: enregistre un commerce public
+      default: op
+    iris.print:
+      description:
+      default: op
+    iris.give:
+      description: donne un item
+      default: op
+    iris.jail:
+      description: Emprisonne un joueur
+      default: op 
+    iris.dejail:
+      description: de-emprisonne un joueur
+      default: op
+    iris.setjail:
+      description: declare un jail
+      default: op      
+    iris.horde.*:
+      description: Gestion des hordes
+      children:
+            iris.horde.create: true
+            iris.horde.del: true
+            iris.horde.reload: true
+            iris.horde.qg: true
+            iris.horde.head: true
+            iris.horde.quit: true
+    iris.horde.qg:
+      description: TP au QG
+      default: true
+    iris.plugin:
+      description: gestion plugin
+      default: op
+    iris.admin.world.*:
+      description: Gestion des mondes
+      children:
+            iris.admin.world.create: true
+            iris.admin.world.import: true
+            iris.admin.world.reset: true
+            iris.admin.world.list: true
+            iris.admin.world.tp: true
+            iris.admin.world.remove: true
+            iris.admin.world.flag: true
+    iris.vip.*:
+      children:
+            iris.vip.1: true
+            iris.vip.2: true
+    iris.mf:
+      description: Affiche le tag d'une entite invisible
+      default: true
+    iris.lock:
+      description: verouille un conteneur par un mot de passe
+      default: true
+   

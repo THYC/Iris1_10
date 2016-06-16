@@ -1,0 +1,11 @@
+<green>--------------------------------------------
+<green>      BANQUE ACHAT/VENTE TROC SERVEUR
+<green>--------------------------------------------
+<gray>Le prix s'affiche en positionnant la sourie sur l'item du cadre
+<yellow>- Pour vendre des items au serveur :
+<gray>Mettre les items <a_gr> vendre dans la main
+<gray>La somme des ventes est vers<e_ai>e directement sur ton compte
+<gray>Puis faire un click droit sur le cadre
+<yellow>- Pour acheter des items au serveur :
+<gray>Faire un click droit sur le cadre pour avoir l'items
+<gray>la somme est retir<e_ai> directement de ton compte

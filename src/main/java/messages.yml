@@ -1,0 +1,211 @@
+# -- Propriétés des messages --
+# Vous pouvez changer le message envoyé en jeu en changeant ce fichier
+# /!\ Ne modifier que le texte après les ':'
+
+# +------------------------------------------------------+ #
+# |                Code caractère & couleur              | #
+# +------------------------------------------------------+ #
+
+# ----------------- Caractère spéciaux
+# <a_ai> = á
+# <a_gr> = à
+# <e_ai> = é
+# <e_gr> = è
+# <e_cir> = ê
+# <u_cir> = û
+# <u_gr> = ù
+# <2points> = :
+
+# ----------------- Smiley
+# <mort> = ☠ (icone tête de mort)
+# <smile> = ☺ (icone smile)
+# <soleil> = ☼ (icone soleil)
+# <star> = ★ (icone étoile)
+# <heart> = ❤ (icone coeur)
+# <heart2> = ♥ (icone coeur 2)
+
+#------------------ Variables
+# <joueur> = pseudo du joueur
+# <world> = monde actif
+# <online> = listes joueurs online
+# <time> = heure du monde (minecraft)
+# <displayname> = 
+
+#------------------ Couleurs
+# <dark_red> = rouge foncé
+# <red> = rouge
+# <gold> = jaune foncé
+# <yellow> = jaune
+# <dark_green> = vert foncé
+# <green> = vert
+# <aqua> = cyan
+# <dark_aqua> = cyan foncé
+# <dark_blue> = bleu foncé
+# <blue> = bleu
+# <light_purple> = violet clair
+# <dark_purple> = violet foncé
+# <white> = blanc
+# <gray> = gris
+# <dark_gray> = gris clair
+# <black> = noir
+
+#------------------ Style
+# <magic> = effet à la matrix
+# <italique> = texte en italique
+# <gras> = texte en gras
+# <barre> = texte barré
+# <underline> = texte souligné
+
+# +------------------------------------------------------+ #
+# |               Messages (Général)                     | #
+# +------------------------------------------------------+ #
+# Affiché lorsque le joueur tape la commande /spawn
+cmdSpawn: <dark_aqua>T<e_ai>l<e_ai>portation au spawn..
+# Affiché lorsque le joueur tape la commande /setspawn
+cmdSetHome: <dark_aqua>Home d<e_ai>finit !
+# message d'erreur sur home inexistant
+cmdErreurHome: <dark_red>Ce home n'<e_ai>xiste pas
+# Affiché lorsque le joueur tape la commande /home
+cmdHome: <dark_aqua>Woooosh..!
+
+# ---- Messages de connection ----
+# Affiché à la déconnection d'un joueur
+quitMsg: <gray><joueur> vient de se d<e_ai>connecter.
+# Affiché à la connection d'un joueur
+joinMsg: <gray><joueur> a rejoint le serveur.
+# Affiché lorsque qu'un nouveau joueur se connecte au serveur
+newPlayer: <dark_aqua>Un nouveau joueur <a_gr> rejoint notre serveur, bienvenue <a_gr> <joueur> !
+# Lorsqu'un nouveau joueur se connecte au serveur, pour lui dire de lire les règles dans le livre
+newRulesBook: <yellow>Veuillez lire les r<e_gr>gles dans le livre fourni
+
+# ---- GraveMessage ----
+# Affiché lorsque le joueur meurt dans un liquide et que la tombe ne peut pas être placé
+graveOnLiquid: <yellow>Votre tombe n'a pas pu <e_cir>tre plac<e_ai> car vous <e_cir>tes mort dans un liquide
+# Affiché lorsque le joueur meurt en volant et que la tombe ne peut pas être placé
+graveOnFlying: <yellow>Votre tombe n'a pas pu <e_cir>tre plac<e_ai> car vous êtes mort dans les airs
+# Affiché au joueur lorsque sa tombe spawn
+graveSpawn: <yellow>Une tombe a <e_ai>t<e_ai> <e_ai>rig<e_ai>e o<u_gr> vous <e_cir>tes mort
+# Affiché au joueur lorsque sa tombe despawn
+graveDespawn: <yellow>Votre tombe a disparu !
+# Gestion de la tombe - Le texte sera affiché sur le panneau créé quand le joueur meurt
+# Note : La ligne 2 est réservé pour le nom du joueur
+graveLine1: <gras>[R.I.P] 
+graveLine3: <dark_gray>[clic droit]
+graveLine4: <blue>pour fouiller
+
+# ---- Messages Fun ----
+# Affiché lorsque le joueur entre dans le lit
+goToBed: <aqua>Chuuuut ! <joueur> est partie se coucher !
+# Effet sur le joueur
+cmdPlayEffect: <gold>Whaouuu ! <joueur>, je crois que tu va faire de l'effet !
+
+# +------------------------------------------------------+ #
+# |              Commandes de Modération                 | #
+# +------------------------------------------------------+ #
+# Affiché lorsqu'un joueur tape /grave info
+cmdGraveInfo: <aqua>Nombre de tombe active <2points>
+# Affiché lorsqu'un joueur tape /grave clear
+cmdGraveClear: <aqua>Suppression de toutes les tombes en m<e_ai>moires effectu<e_ai>es !
+# commande /pos
+cmdPos: <gold>Vous <e_cir>tes aux coordonn<e_ai>es <2points>
+# Affiché à l'activation du /fly 
+onFlyActivate: <dark_gray>Fly activ<e_ai>
+# Affiché à la désactivation du /fly
+onFlyDesactivate: <dark_gray>Fly d<e_ai>sactiv<e_ai>
+
+# ---- Commande de téléportation ----
+# Affiché lorsque le joueur tape la commande /tp
+cmdTP: <dark_aqua>Woooosh..!
+# message d'erreur sur warp inexistant
+cmdErreurWarp: <dark_red>Ce warp n'existe pas
+# /warp
+cmdWarp: <dark_aqua>Woooosh..!
+# /setwarp
+cmdSetWarp: <dark_aqua>WARP cr<e_ai><e_ai> avec succ<e_gr>s !
+# message erreur warp existant
+cmdWarpExist: <dark_aqua>Hum ce Warp existe d<e_ai>j<a_gr> !
+# /setspawn
+cmdSetSpawn: <dark_aqua>Spawn d<e_ai>finit !
+
+# ---- Gestion du temps ----
+# Affiché lorsque le joueur tape /day
+cmdDay: <dark_purple>Le jour a <e_ai>t<e_ai> programm<e_ai> sur <world>
+# Affiché lorsque le joueur tape /night
+cmdNight: <dark_purple>La nuit a <e_ai>t<e_ai> programm<e_ai> sur <world> 
+# Affiché lorsque le joueur tape /rain
+cmdRain: <dark_purple>La pluie a <e_ai>t<e_ai> programm<e_ai> sur <world>
+# Affiché lorsque le joueur tape /sun
+cmdSun: <dark_purple>Le soleil a <e_ai>t<e_ai> programm<e_ai> sur <world>
+
+
+# +------------------------------------------------------+ #
+# |                  Messages d'erreur                   | #
+# +------------------------------------------------------+ #
+# Erreur sur matériaux demandé
+errorMaterial: <dark_red>Ce mat<e_ai>riaux n'existe pas !
+# Affiché lorsque le joueur ciblé est hors ligne
+offlinePlayer: <dark_red>Joueur hors ligne !
+# Message d'erreur lorsque une commande réservée aux joueurs est tapé dans la console
+cmdNoPlayer: <dark_aqua>Commande r<e_ai>serv<e_ai>e aux joueurs
+# sans permission
+noPermission: <dark_red>Vous n'avez pas la permission
+
+# +------------------------------------------------------+ #
+# |                   Messages de Mort                   | #
+# +------------------------------------------------------+ #
+# ---- Morts générales ----
+# mort de faim
+starved-to-death: <dark_red>[<mort>]<dark_gray> <player> est mort de faim
+# Message lorsque le joueur meurt noyé
+drowned: <dark_red>[<mort>]<dark_gray> <player> s'est noy<e_ai>
+# Message lorsque le joueur meurt d'une chute
+hit-the-ground-too-hard: <dark_red>[<mort>]<dark_gray> <player> a fait une chute mortelle
+# Message lorsque le joueur tombe dans le vide
+fell-out-of-world: <dark_red>[<mort>]<dark_gray> <player> est tomb<e_ai> dans le néant infini
+# suffoquer dans un mur
+suffocated-in-a-wall: <dark_red>[<mort>]<dark_gray> <player> s'est fait emmurer!
+# Message lorsque le joueur meurt dans la lave
+tried-to-swin-in-lava:  <dark_red>[<mort>]<dark_gray> <player> a oubli<e_ai> de prendre sa combinaison inifug<e_ai>e...
+# Messages lorsque le joueur meurt dans du feu
+went-up-in-flames: <dark_red>[<mort>]<dark_gray> <player> est mort br<u_cir>l<e_ai> 
+# s'est fait écrasé par une enclume - Causé quand l'enclume vous tue
+was-squashed-by-a-falling-anvil: <dark_red>[<mort>]<dark_gray> <player> s'est fait ecras<e_ai> par une enclume
+# meurt autrement (aussi causé par la commande /kill)
+died: <dark_red>[<mort>]<dark_gray> <player> est mort dans le monde <world>
+
+# ---- Joueur contre Joueur (PvP) ----
+# -> Note: la TNT active le message "blew-up" de la catégorie Mobs hostiles
+# a été tué par
+was-slain-by: <dark_red>[<mort>]<dark_gray> <player> a <e_ai>t<e_ai> tu<e_ai> par <killer>
+# a été abattu par - affiché lorsque que le joueur se fait tuer avec un arc
+was-shot-by: <dark_red>[<mort>]<dark_gray> <player> a <e_ai>t<e_ai> abattu par <killer>
+# a été tué par  - affiché lorsque que le joueur se fait tuer avec une potion splash
+was-killed-by:  <dark_red>[<mort>]<dark_gray> <player> a <e_ai>t<e_ai> abattu par <killer>
+# a été lapidé par - survient quand on est tué par une boule de neige, un oeuf de poule ou une perle de l'Ender
+was-pummeled-by: <dark_red>[<mort>]<dark_gray> <player> a <e_ai>t<e_ai> lapid<e_ai> par <killer>
+# s'est fait tiré dessus par une flèche - Dispenser quand il utilise les flèches
+was-shot-by-arrow: <dark_red>[<mort>]<dark_gray> <player> s'est fait tir<e_ai> dessus
+# Brûlé à mort - affiché lorsque le joueur meurt brûlé par un echantemment, brûlé une boule de feu, ect..
+burned-to-death: <dark_red>[<mort>]<dark_gray> <player> a br<u_cir>l<e_ai> jusqu'<a_gr> la mort
+# terrible chute..
+fell_from_a_hight_place: <dark_red>[<mort>]<dark_gray> <player> s'est pris pour un volatile et s'est rammass<e_ai>
+
+# ---- Mobs hostiles ----
+# tué par un creeper.
+creeper: <dark_red>[<mort>]<dark_gray> <player> a effectu<e_ai> une tentative de rapprochement auprès d'un Creeper
+# a explosé - Creepers, Ghasts et la TNT cause ce message.
+blew-up: <dark_red>[<mort>]<dark_gray> <player> s'est fait explos<e_ai> par <killer>
+# a été tué par - uniquement affiché pour les mobs
+was-slain-by-mob: <dark_red>[<mort>]<dark_gray> <player> a <e_ai>t<e_ai> tu<e_ai> par <killer>
+# a été abattu par - n'est causé que par des mobs avec des attaques de projectiles
+was-shot-by-mob: <dark_red>[<mort>]<dark_gray> <player> a <e_ai>t<e_ai> abattu par <killer>
+# a été tué par  - Causé uniquement par les Witch
+was-killed-by-mob: <dark_red>[<mort>]<dark_gray> <player> a <e_ai>t<e_ai> empoisonn<e_ai> par une <killer>
+# piqué à mort
+was-pricked-to-death: <dark_red>[<mort>]<dark_gray> <player> a <e_ai>t<e_ai> piqu<e_ai> <a_gr> mort
+# dépéri au loin - à cause des Withers
+withered-away: <dark_red>[<mort>]<dark_gray> <player> a d<e_ai>p<e_ai>ri au loin
+# a été tué alors qu'il essayait de tuer - Enchantement de l'épine - Causé uniquement par les mobs qui peuvent porter une armure
+was-killed-while-trying-to-hurt: <dark_red>[<mort>]<dark_gray> <player> a <e_ai>t<e_ai> tu<e_ai> alors qu'il essayait de blesser <killer>
+# a été tué par magie - Potion d'endommagement - Quand on se fait tiré dessus par un dispenser
+was-killed-by-magic:  <dark_red>[<mort>]<dark_gray> <player> s'est fait pi<e_ai>ger!

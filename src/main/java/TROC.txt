@@ -1,0 +1,15 @@
+<green>--------------------------------------------
+<green>              AIDE - TROC
+<green>    Proc<e_ai>dure pour ouvrir un commerce
+<green>--------------------------------------------
+<yellow>- <gras>ETAPE 1
+<gray>Met l'item <a_gr> vendre ou que tu souhaites acheter dans ta main (1 seul)
+<gray>tape la commande <yellow>/troc vente [prix] <gray>pour vendre 
+<gray>tape la commande <yellow>/troc achat [prix] <gray>pour des offres d'achats
+<gray>tu remplaces [prix] par le prix que tu veux ^^, tu peux mettre 0.01 par ex
+<yellow>- <gras>ETAPE 2
+<gray>tu poses l'item dans le coffre sur la rang<e_ai>e du haut <a_gr> gauche
+<gray>tu peux mettre jusqu'<a_gr> 9 objets <a_gr> vendre/acheter sur la rang<e_ai>e du haut
+<gray>C'est toujours l'item place en haut compl<e_gr>tement <a_gr> gauche qui active le commerce
+<gray>quand tu n'as plus rien <a_gr> vendre ou acheter, tu lib<e_ai>res le coffre de tes items
+<gray>La somme des ventes est vers<e_ai>e directement sur ton compte

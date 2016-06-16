@@ -1,0 +1,10 @@
+<green>--------------------------------------------
+<green>                  HORDE
+<green>--------------------------------------------
+<gray>- Creez votre Horde
+<gray>- Battissez votre forteresse
+<gray>- Recrutez des guerriers
+<gray>- Aneantissez vos ennemis
+<gray>- Et devellopez votre empire
+<gray> 
+<gray>Tr<e_gr>s Prochainement sur ce serveur ...

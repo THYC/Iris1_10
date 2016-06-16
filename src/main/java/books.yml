@@ -1,0 +1,144 @@
+onlogin:
+    - Encyclopedie
+
+default:
+    - Encyclopedie
+
+protected:
+    - Encyclopedie
+
+book:
+    Encyclopedie:
+        pages:
+            - &9 Pour toutes questions adressez vous au STAFF:&x&x
+                Developpeur plugin IRIS:&x
+                ...thyc82&x&x
+                Admin du serveur:&x
+                ...thyc82 et Zora82&x&x
+                Site web:&x
+                ...thyc82
+            - '&l-*+*-*+*-*+*-*+*-
+                &x  &4&lBienvenue sur le
+                &x  serveur TeraOctet 
+                &x&0&l-*+*-*+*-*+*-*+*-
+                &xUn site web avec forum
+                &xest a votre disposition 
+                &xa l adresse:
+                &x&9http://teraoctet.net/mcraft/
+                &x
+                &x 
+                &x 
+                &x&0&l-*+*-*+*-*+*-*+*-
+                &x &rTournez la page &8>>'
+            - '&l-*+*-*+*-*+*-*+*-
+                &x      &4&lSommaire 
+                &x&0&l-*+*-*+*-*+*-*+*-
+                &x 
+                &x&4&l1)&0&rPr<e_ai>sentation 
+                &x
+                &x&4&l2)&0&rCommandes 
+                &x 
+                &x&4&l3)&0&rR<e_gr>gles 
+                &x
+                &x&4&l4)&0&rDevenir VIP 
+                &x 
+                &x&4&l5)&0&rDevenir Premium'
+            - '&l-*+*-*+*-*+*-*+*-
+                &x    &3&lPr<e_ai>sentation
+                &x&0&l-*+*-*+*-*+*-*+*-
+                &x&0le serveur dispose de
+                &x plusieurs modes:
+                &x&0 CREATIVE -> &4Map IrisTown
+                &x&0 SURVIE -> &4Map Azycko
+                &x&0 PVP -> &4Map Horde
+                &x&0 2 mini games :
+                &x&0 &4-> TNT Run
+                &x&0 &4-> PaintBall
+                &x 
+                &x 
+                &x '
+            - '&l-*+*-*+*-*+*-*+*-
+                &x     &4&lCommandes
+                &x&0&l-*+*-*+*-*+*-*+*-
+                &x&0 Pour toutes les commandes:
+                &x ... Tape &5/help&0
+                &x IRIS est un plugin d<e_ai>velopp<e_ai> 
+                &x pour notre serveur.
+                &x Commande IRIS:
+                &x ... Tape &5/iris&0
+                &x Commande importante :
+                &x ... &5/bank 
+                &x ... &5/parcelle
+                x '
+            - '&l-*+*-*+*-*+*-*+*-
+                &x       &4&lR<e_gr>gles
+                &x&0&l-*+*-*+*-*+*-*+*-
+                &x&0Tu trouveras un r<e_gr>glement 
+                &xpour chaque mode de jeux.
+                &xQuand tu es face a un 
+                &xpanneaux avec ce signe &l[?]:
+                &x&0tu peux obtenir le r<e_gr>glement
+                &xou de l aide sur une commande
+                &xen faisant un click droit dessus.
+                &x
+                &x '
+            - '&l-*+*-*+*-*+*-*+*-
+                &x         &6&lVIP
+                &x&0&l-*+*-*+*-*+*-*+*-
+                &x&0Si tu es pr<e_ai>sent r<e_ai>guli<e_gr>rement
+                &xtu deviendra VIP automatiquement
+                &xCe grade se calcul en fonction
+                &xde ton temps de connection.
+                &xIl est attribu<e_ai> par le serveur
+                &xde mani<e_gr>re automatique.
+                &x 
+                &x 
+                &x 
+                &x '
+        author: TeraOctet
+        title: Encyclopedie
+        lore:
+            - Un vieux livre contentant de nombreuses
+            - informations sur le monde vous entourant
+        bookonfirstjoin: true
+    TNTRun:
+        pages:
+            - <red>Bienvenue sur TNTRun <joueur> !&x &x&0
+                <dark_green>Le jeu est tr<e_gr>s simple:&x
+                au top d<e_ai>part, chaque bloc que&x
+                tu fouleras se d<e_ai>robera sous tes 
+                pieds, laissant apparaitre un trou <a_gr> la place.&x
+                Pour <e_ai>viter de tomber tu devras sans cesses courrir 
+                sans jamais t'arr<e_cir>ter.
+            - <red>Si tu t'arr<e_cir>te, c'est la chute assur<e_ai>!&x
+                <green>En cas de chute, tu tomberas à l'<e_ai>tage inf<e_ai>rieur 
+                ou tu auras de nouveau ta chance, mais attention,
+                d<e_gr>s ta chute, le sol se d<e_ai>robera de nouveau 
+                et tu devra de suite courrir sans t'arr<e_cir>ter !
+            - Le nombre de niveau est limit<e_ai> en fonction de la salle que tu auras choisit !&x
+                Alors tu es pr<e_cir>t <a_gr> relerver le d<e_ai>fi ?&x
+                Pour rentrer dans la salle click sur le panneaux <red>JOIN&x
+                <green>Un minium de joueur est requis, tu devras peut <e_cir>tre patienter.
+            - <aqua><gras>Information developpement Iris plugin:&x <red>thyc82, Erawin
+        author: THYC82
+        title: MINI JEU TNT RUN
+        lore:
+            - Mini jeu
+            - TNT RUN
+        bookonfirstjoin: false
+    helpbook:
+        pages:
+            - <gras>Un site web avec forum est a
+                votre disposition a l'adresse:&x
+                <gras><blue>http://mc.teroctet.net &x<black>
+                <gras>Lors de votre premi<e_gr>re connection, vous serez enregistr<e_ai> dans le groupe 'vagabond' &x
+                <gras>Pour monter au grade sup<e_ai>rieur, vous devrez vous inscrire sur le forum.&x
+            - <gras><red>Le serveur est en version beta et est en perpetuel <e_ai>volution&x
+                <gras>Donnez votre avis et partagez vos id<e_ai>es.
+            - Pour toutes questions adressez vous au STAFF:&x
+                <gray>Developpeur plugin IRIS:&x
+                <black><gras>thyc82, Erawin&x
+                <gray>Admin du serveur:&x
+                <black><gras>thyc82, Erawin et Zora82&x
+                <gray>Site web:&x
+                <black><gras>thyc82, Erawin

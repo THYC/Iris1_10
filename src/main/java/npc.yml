@@ -1,0 +1,14 @@
+## YAML Template.
+---
+NPC:
+    1456:
+        quete:
+        msg1:
+        msg2:
+        gain:
+    1234:
+        quete:
+        msg1:
+        msg2:
+        gain:
+    

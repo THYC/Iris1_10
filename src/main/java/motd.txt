@@ -1,0 +1,4 @@
+<gold>Bienvenue, <joueur> !
+<gold>Tape <red>/help <gold>pour la liste des commandes.
+<gold>Joueurs connect<e_ai>s: <online> - Heure du monde: <time>
+  

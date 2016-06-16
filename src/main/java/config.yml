@@ -1,0 +1,216 @@
+    
+############################################################
+# +------------------------------------------------------+ #
+# |                       Notes                          | #
+# +------------------------------------------------------+ #
+############################################################
+
+# Si vous voulez utiliser des caractères spéciaux dans ce document, tels que les lettres accentuées, vous DEVEZ enregistrer le fichier au format UTF-8, pas ANSI.
+# Si vous recevez une erreur quand le plugin charge, veillez à ce que:
+#   - Aucunes tabulation est présente: le YAML accepte que les espaces
+#   - Les identations sont correctes: la hiérarchie YAML est entièrement basé sur l'identation
+
+
+############################################################
+# +------------------------------------------------------+ #
+# |                   IRIS (General)                     | #
+# +------------------------------------------------------+ #
+############################################################
+
+# Active la securité supplémentaire pour serveur online=false
+enableLogin: false
+# Limite écoute Chat, mettre 0 pour désactiver la limite
+ChatRadius: 5
+# délai d'attente + intervalle entre 2 messages de MessageAuto
+IntervalMessageAuto: 1200
+DelaisMessageAuto: 6000
+# Le délais pour respawn, en minutes 
+respawn-time: 3
+# Téléporter le joueur à un spawn quand il respawn ?
+teleportOnRespawn: true
+# Les coordonnées du respawn si teleportOnRespawn est "true"
+# Format: monde;x;y;z
+respawnLocation: world;5;64;2
+# Utilisation de bloc interdit
+BlocInterdit:
+    - 45
+    - 11
+# AntiGrief - Enregistrement des blocs cassés
+Mouchard: true
+    - 45
+    - 4
+    - 5
+    - 17
+    - 35
+    - 20
+    - 24
+    - 54
+    - 85
+    - 98
+    - 102
+    - 155
+# Map en mode PVP avec permissions iris.horde
+HordePVP: horde
+# Map par defaut pour les nouveaux, acces par la commande /lobby
+FistMapSpawn: Shambhala
+# Block pouvant être cassé par la TNT en PVP sur une zone Claim
+HordeBlockBreakTNT:
+    - WOODEN_DOOR
+    - DROPPER
+    - WOOD_DOOR
+    - CHEST
+    - FURNACE
+    - IRON_DOOR
+    - IRON_DOOR_BLOCK
+    - GLASS
+    - MOB_SPAWNER
+    - ENDER_CHEST
+    - DISPENSER
+    - BURNING_FURNACE
+    - PISTON_BASE
+    - PISTON_EXTENSION
+    - PISTON_MOVING_PIECE
+    - PISTON_STICKY_BASE
+# délai d'utilisation de commande en s pour la map PVP
+CoolDownTime: 120
+# Mettre 'true' pour désactiver les dégats
+# N'entre pas en compte sur la map PVP
+Degats:
+    Enderman: true
+    Silverfish: false
+    Sheep: false
+    MobExplosion: true
+    TNT: true
+    SnowMan: false
+
+############################################################
+# +------------------------------------------------------+ #
+# |                     Effet de sang                    | #
+# +------------------------------------------------------+ #
+############################################################
+
+# Effets de sang quand une entité est frappée
+BloodEffect:
+  # Activer les effets de sang ?
+  activated: true
+  # Pour les paramètres suivant activated DOIT être sur true sinon le sang ne sera pas actif !
+  # Activer les effets de sang sur les joueurs ? 
+  onPlayer: true
+  # Activer les effets de sang sur les villageois ?
+  onVillager: true
+  # Activer les effets de sang sur les zombies ?
+  onZombie: true
+  # Activer les effets de sang sur les skeleton ?
+  onSkeleton: false
+  # Activer les effets de sang sur les zombies ?
+  onCreeper: false
+  # Activer les effets de sang sur les spider et les cave spider ?
+  onSpider: false
+  # Activer les effets de sang sur les enderman ?
+  onEnderman: false
+  # Activer les effets de sang sur les blaze ?
+  onBlaze: false
+  # Activer les effets de sang sur les magma cube ?
+  onMagmaCube: false
+  # Activer les effets de sang sur les blaze ?
+  onBlaze: false
+  # Activer les effets de sang sur les ghast ?
+  onGhast: false
+  # Activer les effets de sang sur les zombies pigman ?
+  onPigZombie: false
+  # ID du bloc utilisé pour le sang (par défaut: 152)
+  blockID: 152
+    
+############################################################
+# +------------------------------------------------------+ #
+# |                   Barre de vie                       | #
+# +------------------------------------------------------+ #
+############################################################   
+    
+# Couleur ajouté à TAB
+modifytab: true
+# Supprime toutes les couleurs, les caractères spéciaux et les formats de TAB 
+cleantab: false
+# Couleur affecté au groupe
+StaffColour: '&4'
+VIPColour: '&6'
+PremiumColour: '&5'
+# active l'auto refresh
+autorefresh: true
+# Rafraichissement en milliseconds, e.g. 60 seconds = 60000 milliseconds
+refreshinterval: 60000
+# active le HealthBar
+showhealth: false
+
+
+############################################################
+# +------------------------------------------------------+ #
+# |                Promotion achievements                | #
+# +------------------------------------------------------+ #
+############################################################ 
+
+# ajouter dessous le nom des achievements que vous souhaitez être comme un point de promotion
+# dans group : indiquer le group permission atteint à l'obtention du succes
+# dans world : indiquer le world ou affecter la promotion, si vide la promotion est affecté a tous les worlds
+
+promotionActif: true
+achievements:
+OPEN_INVENTORY:
+MINE_WOOD:
+BUILD_WORKBENCH:
+    group: 
+    world: 
+    message: <yellow>Bravo <joueur>, pour t'encourager tu viens de gagner un petit cadeau !
+    items: GOLDEN_CARROT
+BUILD_PICKAXE:
+BUILD_FURNACE: 
+    group: apprenti
+    world: azycko
+    message: <yellow>Bravo <joueur>, tu progresses ! tu prends du grade, continue !
+    items: GOLDEN_CARROT    
+ACQUIRE_IRON:
+BUILD_HOE:
+MAKE_BREAD:
+    group: citoyen
+    world: azycko
+    message: <aqua>Bravo <joueur>, tu es maintenant un citoyen d'Azycko ! pour tes efforts tu gagnes un cadeau ! 
+    items: DIAMOND_PICKAXE   
+BAKE_CAKE:
+BUILD_BETTER_PICKAXE:
+COOK_FISH:
+ON_A_RAIL:
+BUILD_SWORD:
+KILL_ENEMY:
+KILL_COW:
+FLY_PIG:
+SNIPE_SKELETON:
+GET_DIAMONDS:
+    group: artisan
+    world: azycko
+    message: <aqua>Bravo <joueur>, tu prends du grade ! pour tes efforts tu gagnes un cadeau qui t'aidera a progresser ! 
+    items: LEASH       
+NETHER_PORTAL:
+GHAST_RETURN:
+GET_BLAZE_ROD:
+BREW_POTION:
+    message: <aqua>Bravo <joueur>, pour tes efforts tu gagnes un cadeau de grande valeur ! 
+    items: CHAINMAIL_CHESTPLATE       
+END_PORTAL:
+THE_END:
+    group: architecte
+    world: azycko
+    message: <aqua>Felicitation <joueur>, tu es dans la cour des grands ! pour tes efforts tu gagnes un cadeau de grande valeur ! 
+    items: CHAINMAIL_LEGGINGS           
+ENCHANTMENTS:
+OVERKILL:
+BOOKCASE:
+
+############################################################
+# +------------------------------------------------------+ #
+# |                        MySQL                         | #
+# +------------------------------------------------------+ #
+############################################################ 
+
+dbURL: 'jdbc:mysql://localhost/'
+user: 'root'
+password: 'pass'

@@ -1,0 +1,16 @@
+############################################################
+# |                   Config Border                      | #
+############################################################
+message: Votre message
+round-border: true
+debug-mode: false
+whoosh-effect: true
+portal-redirection: true
+knock-back-dist: 3.0
+timer-delay-ticks: 5
+remount-delay-ticks: 0
+player-killed-bad-spawn: false
+deny-enderpearl: false
+fill-autosave-frequency: 30
+bypass-list: []
+worlds:

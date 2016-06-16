@@ -1,0 +1,8 @@
+<gray>Tu es nouveau sur ce serveur et pour bien demarrer,
+<gray>5 Emeraudes ont <e_ai>t<e_ai> vers<e_ai> sur ton compte
+<gray>a tout moment tape <yellow>/bank <gray>pour voir le contenu de ton compte
+<gray>cette somme te servira a t'acheter un kit de la composition
+<gray>de ton choix, dans le magasin communautaire situ<e_ai> sous
+<gray>l'enseigne <aqua>'TROC'<gray>, tous les panneaux portant l'inscription
+<gray>[?] sont des aides, click droit dessus pour avoir des infos.
+  
