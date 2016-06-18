@@ -400,20 +400,30 @@ import ru.tehkode.permissions.bukkit.PermissionsEx;
                                     {
                                         if (!event.getMessage().contains("/ma"))
                                         {
-                                            if (!event.getMessage().contains("/parcelle info"))
+                                            if (!event.getMessage().contains("/kill"))
                                             {
-                                                if (!event.getMessage().contains("/bank"))
+                                                if (!event.getMessage().contains("/parcelle info"))
                                                 {
-                                                    player.sendMessage(formatMsg.format("<light_purple>Vous ne pouvez pas taper de commande ici"));
-                                                    event.setCancelled(true);
+                                                    if (!event.getMessage().contains("/bank"))
+                                                    {
+                                                        player.sendMessage(formatMsg.format("<light_purple>Vous ne pouvez pas taper de commande ici"));
+                                                        event.setCancelled(true);
+                                                    }
                                                 }
                                             }
                                         }
                                     }
                                 }
                             }
+                        }else if(event.getMessage().contains("/home"))
+                        {
+                            player.sendMessage(formatMsg.format("<light_purple>Tu ne peut taper cette commande ici"));
+                            player.sendMessage(formatMsg.format("<light_purple>Tu es sur un terrain ennemi"));
+                            player.sendMessage(formatMsg.format("<light_purple>Debrouille toi pour rentrer ou bien "));
+                            player.sendMessage(formatMsg.format("<light_purple>suicide toi en tapant /kill"));
+                            event.setCancelled(true);
                         }
-                    }
+                    }  
                 }
             }
                         

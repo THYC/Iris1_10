@@ -1,5 +1,6 @@
 package net.teraoctet.iris;
 
+import net.teraoctet.iris.listener.GraveListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -49,7 +50,7 @@ implements Listener
         return plugin;
     }
     
-    public GraveListener grave = new GraveListener();
+    private final GraveListener grave = new GraveListener(this);
     private final PlayerListener playerListener = new PlayerListener(this);
     private final TrocListener trocListener = new TrocListener();
     private final PokerListener pokerListener = new PokerListener();
@@ -119,7 +120,7 @@ implements Listener
         
         loadInventory();
         PluginManager pm = getServer().getPluginManager();
-        pm.registerEvents(new GraveListener(this), this);
+        pm.registerEvents(grave, this);
         pm.registerEvents(playerListener, this);
         pm.registerEvents(trocListener, this);
         pm.registerEvents(pokerListener, this);
