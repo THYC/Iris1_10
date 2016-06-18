@@ -33,7 +33,7 @@ implements CommandExecutor
                 if (args.length == 0 || args[0].equalsIgnoreCase("1"))
                 {
                     player.sendMessage(formatMsg.format("<yellow>-------- AIDE Parcelle - /parcelle ou /parc -----------------"));
-                    player.sendMessage(formatMsg.format("<yellow>Index (1/2) - tape /parc [index]"));
+                    player.sendMessage(formatMsg.format("<yellow>Index (1/3) - tape /parc [index]"));
                     player.sendMessage(formatMsg.format("<gray>-<green>/parcelle add <yellow>[NomDeParcelle] <gray>Enregistre une parcelle"));
                     player.sendMessage(formatMsg.format("<gray>-<green>/parcelle add <yellow>[NomDeParcelle] TH <gray>Enregistre une parcelle sur toute la hauteur de la map"));
                     player.sendMessage(formatMsg.format("<gray>-<green>/parcelle del <yellow>[NomDeParcelle] <gray>Supprime une parcelle"));
@@ -41,22 +41,29 @@ implements CommandExecutor
                     player.sendMessage(formatMsg.format("<gray>-<green>/parcelle msg <gray>Affiche le message d'accueil actuel"));
                     player.sendMessage(formatMsg.format("<gray>-<green>/parcelle addplayer <yellow>[Joueur] <gray>Ajoute les droits d'un joueur à la parcelle"));
                     player.sendMessage(formatMsg.format("<gray>-<green>/parcelle delplayer <yellow>[parcelle] [Joueur] <gray>Supprime les droits d'un joueur à la parcelle"));
-                    player.sendMessage(formatMsg.format("<gray>-<green>/parcelle flag <yellow>[NomParcelle] <gray>Affiche la valeur des flags pour cette parcelle"));
-                    player.sendMessage(formatMsg.format("<gray>-<green>/parcelle flag <yellow>[NomParcelle] <green>noenter <yellow>[0|1] <gray>1 = Les joueurs 'default' ne peuvent entrer"));
                     return true;
                 }
                 if (args[0].equalsIgnoreCase("2"))
                 {
-                    player.sendMessage(formatMsg.format("<yellow>Index (2/2) - tape /parc [index]"));
+                    player.sendMessage(formatMsg.format("<yellow>Index (2/3) - tape /parc [index]"));
+                    player.sendMessage(formatMsg.format("<gray>-<green>/parcelle flag <yellow>[NomParcelle] <gray>Affiche la valeur des flags pour cette parcelle"));
+                    player.sendMessage(formatMsg.format("<gray>-<green>/parcelle flag <yellow>[NomParcelle] <green>noenter <yellow>[0|1] <gray>1 = Les joueurs 'default' ne peuvent entrer"));
                     player.sendMessage(formatMsg.format("<gray>-<green>/parcelle flag <yellow>[NomParcelle] <green>nobuild <yellow>[0|1] <gray>1 = Les étrangers ne peuvent pas construire"));
                     player.sendMessage(formatMsg.format("<gray>-<green>/parcelle flag <yellow>[NomParcelle] <green>nobreak <yellow>[0|1] <gray>1 = Les étranger ne peuvent pas casser"));
                     player.sendMessage(formatMsg.format("<gray>-<green>/parcelle flag <yellow>[NomParcelle] <green>notp <yellow>[0|1] <gray>1 = Les étrangers ne peuvent pas se TP"));
                     player.sendMessage(formatMsg.format("<gray>-<green>/parcelle flag <yellow>[NomParcelle] <green>nointerac <yellow>[0|1] <gray>1 = pas d'interaction avec les objets"));
                     player.sendMessage(formatMsg.format("<gray>-<green>/parcelle flag <yellow>[NomParcelle] <green>nofire <yellow>[0|1] <gray>1 = Le feu ne détruit pas les blocs"));
                     player.sendMessage(formatMsg.format("<gray>-<green>/parcelle flag <yellow>[NomParcelle] <green>nomob <yellow>[0|1] <gray>1 = Pas de spawn de monstres"));
+                    if(player.hasPermission("iris.admin.parcelle.reload")) player.sendMessage(formatMsg.format("<gray>-<green>/parcelle reload <gray>Recharge les donnees parcelles"));
+                    return true;
+                }
+                if (args[0].equalsIgnoreCase("3"))
+                {
+                    player.sendMessage(formatMsg.format("<yellow>Index (3/3) - tape /parc [index]"));
                     player.sendMessage(formatMsg.format("<gray>-<green>/parcelle info <gray>Info sur la parcelle"));
                     player.sendMessage(formatMsg.format("<gray>-<green>/parcelle avendre <yellow>[Prix] <gray>Met en vente la parcelle"));
                     player.sendMessage(formatMsg.format("<gray>-<green>/parcelle changeplayer <yellow>[nomparcelle] [Nom_joueur] <gray>Change le propriétaire de la parcelle"));
+                    player.sendMessage(formatMsg.format("<gray>-<green>/parcelle borne <gray>Place un block de pierre avec une torche au angle de ta parcelle"));
                     if(player.hasPermission("iris.admin.parcelle.reload")) player.sendMessage(formatMsg.format("<gray>-<green>/parcelle reload <gray>Recharge les donnees parcelles"));
                 }
                 return true;
@@ -332,7 +339,7 @@ implements CommandExecutor
                     return true;
                 }
             }
-            if((args[0].equalsIgnoreCase("msg") && (player.hasPermission("iris.parcelle.message")) || player.isOp()))
+            if((args[0].equalsIgnoreCase("msg") && (player.hasPermission("iris.parcelle.message") || player.isOp())))
             {
                 if(args.length > 1)
                 {
@@ -472,6 +479,18 @@ implements CommandExecutor
                 {
                     player.sendMessage(formatMsg.format("<gray>principe: <green>/parcelle changeplayer <yellow>[nomparcelle] [Nom_joueur]"));
                 }
+            }
+            if(args[0].equalsIgnoreCase("borne") && player.hasPermission("iris.parcelle.borne"))
+            {
+                Parcelle parcelle = parcelleManager.getParcelle(player.getLocation());
+                if (parcelle != null && !parcelle.getuuidOwner().contains(player.getUniqueId().toString()) && !player.isOp())
+                {
+                    player.sendMessage(formatMsg.format("<light_purple>Vous devez <e_cird>tre sur une parcelle et "
+                            + "<e_cird>tre propriétaire de la parcelle pour executer cette commande>"));
+                    return true;
+                }
+                parcelle.limitedParcel();
+                return true;
             }
             if(args[0].equalsIgnoreCase("reload") && player.hasPermission("iris.admin.parcelle.reload"))
             {

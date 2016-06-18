@@ -1,5 +1,5 @@
 name: Iris
-version: 1.9.0
+version: 1.0
 main: net.teraoctet.iris.Iris
 commands:
   pos:
@@ -198,6 +198,7 @@ commands:
            /<command> delplayer [parcelle] [joueur] - supprime un habitant sur la parcelle
            /<command> avendre [prix] - Pose un panneaux de vente de la parcelle
            /<command> reload - Recharge les donnees parcelle
+           /<command> borne - Delimite la parcelle
   world:
     description: gestion des mondes
     aliases: [wd]
@@ -475,6 +476,9 @@ permissions:
       default: true
     iris.parcelle.reload:
       description: recharge les donnees parcelles
+      default: op
+    iris.parcelle.borne:
+      description: delimite la parcelle
       default: op
     iris.troc:
       description: enregistre un commerce

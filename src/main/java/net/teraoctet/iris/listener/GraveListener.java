@@ -1,7 +1,9 @@
-package net.teraoctet.iris;
+package net.teraoctet.iris.listener;
 
 import static java.lang.Math.rint;
 import java.util.ArrayList;
+import net.teraoctet.iris.ConfigFile;
+import net.teraoctet.iris.Iris;
 import net.teraoctet.iris.utils.FormatMsg;
 import net.teraoctet.iris.inventory.chest;
 import org.bukkit.Bukkit;
@@ -26,7 +28,7 @@ import org.bukkit.inventory.PlayerInventory;
 public class GraveListener
   implements Listener
 {
-    Iris plugin;
+    private final Iris plugin;
     private static final ConfigFile conf = new ConfigFile();
     
     public GraveListener(Iris plugin)
@@ -38,10 +40,10 @@ public class GraveListener
     private String NomDuJoueur;
     public static ArrayList<chest> inventorys = new ArrayList<>();
 
-    GraveListener() 
+    /*public GraveListener() 
     {
         
-    }
+    }*/
        
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerDeath(PlayerDeathEvent event)

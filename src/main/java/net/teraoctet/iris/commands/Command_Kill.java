@@ -18,7 +18,7 @@ implements CommandExecutor
     {
         Player player = (Player)sender;
         
-        if (commandLabel.equalsIgnoreCase("kill") && (sender.isOp() || sender.hasPermission("iris.kill"))) 
+        if (commandLabel.equalsIgnoreCase("kill")) 
         {
             if (args.length == 0)
             {
@@ -30,7 +30,7 @@ implements CommandExecutor
                 player.setHealth(0);
                 return true;
             }
-            else if (args.length == 1)
+            else if (args.length == 1 && (sender.isOp() || sender.hasPermission("iris.kill")))
             {
                 Player target = sender.getServer().getPlayer(args[0]);
                 if (target == null)

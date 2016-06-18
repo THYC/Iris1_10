@@ -3,6 +3,10 @@ package net.teraoctet.iris.parcelle;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import static org.bukkit.Material.AIR;
+import static org.bukkit.Material.COBBLESTONE;
+import static org.bukkit.Material.SNOW;
+import static org.bukkit.Material.TORCH;
 import org.bukkit.World;
 
 public class Parcelle 
@@ -273,5 +277,31 @@ public class Parcelle
         World worldInstance = Bukkit.getWorld(this.getWorldName());
         Location location = new Location(worldInstance, this.x1, this.y2, this.z1);
         return location;
+    }
+    
+    public void limitedParcel()
+    {
+        World worldInstance = Bukkit.getWorld(this.getWorldName());
+        Location L1 = getLimited(new Location(worldInstance, this.x1, 250, this.z1));
+        Location L2 = getLimited(new Location(worldInstance, this.x2, 250, this.z1));
+        Location L3 = getLimited(new Location(worldInstance, this.x2, 250, this.z2));
+        Location L4 = getLimited(new Location(worldInstance, this.x1, 250, this.z2));
+        L1.getBlock().setType(COBBLESTONE);
+        L1.add(0, 1, 0).getBlock().setType(TORCH);
+        L2.getBlock().setType(COBBLESTONE);
+        L2.add(0, 1, 0).getBlock().setType(TORCH);
+        L3.getBlock().setType(COBBLESTONE);
+        L3.add(0, 1, 0).getBlock().setType(TORCH);
+        L4.getBlock().setType(COBBLESTONE);
+        L4.add(0, 1, 0).getBlock().setType(TORCH);
+    }
+    
+    private Location getLimited(Location loc){
+        if(!loc.getBlock().getType().equals(AIR) && !loc.getBlock().getType().equals(SNOW)){
+            return loc.add(0, 1, 0);
+        }else{
+            loc = getLimited(loc.add(0, -1, 0));
+        }
+        return loc;
     }
 }

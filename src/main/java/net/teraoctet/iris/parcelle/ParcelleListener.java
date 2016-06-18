@@ -421,95 +421,7 @@ implements Listener
             player.setGameMode(fparcelle.getGamemode());
         }
     }
-    
-    @EventHandler(priority=EventPriority.NORMAL)
-    public void onAnimalDamage(EntityDamageByEntityEvent event) 
-    {
-        Player player;   
-        Parcelle parcelle = parcelleManager.getParcelle(event.getEntity().getLocation());
-        //HChunk chunk = chunkManager.getChunk(event.getEntity().getLocation());
-
-        if (parcelle != null)
-        {
-            if (parcelle.getName().contains("|off|"))
-            {
-                return;
-            }
-            if(event.getEntity() instanceof org.bukkit.entity.Animals)
-            {     
-
-                if(event.getDamager() instanceof org.bukkit.entity.Arrow)
-                {
-                    player = (Player)((Arrow)event.getDamager()).getShooter();
-                    if(player == null) return;
-                    if(!parcelle.getuuidAllowed().contains(player.getUniqueId().toString()) && !player.isOp())
-                    {
-                        player.sendMessage(formatMsg.format("<light_purple>Vous ne pouvez pas tuer un animal sur une parcelle prot<e_ai>g<e_ai>"));
-                        event.setCancelled(true);
-                    }
-                }
-                if(event.getDamager() instanceof org.bukkit.entity.Projectile)
-                {
-                    player = (Player)((Projectile)event.getDamager()).getShooter();
-                    if(player == null) return;
-                    if(!parcelle.getuuidAllowed().contains(player.getUniqueId().toString()) && !player.isOp())
-                    {
-                        player.sendMessage(formatMsg.format("<light_purple>Vous ne pouvez pas tuer un animal sur une parcelle prot<e_ai>g<e_ai>"));
-                        event.setCancelled(true);
-                    }
-                }
-                if(event.getDamager() instanceof org.bukkit.entity.Player)
-                {
-                    player = (Player)((Player)event.getDamager());
-                    if(player == null) return;
-                    if(!parcelle.getuuidAllowed().contains(player.getUniqueId().toString()) && !player.isOp())
-                    {
-                        player.sendMessage(formatMsg.format("<light_purple>Vous ne pouvez pas tuer un animal sur une parcelle prot<e_ai>g<e_ai>"));
-                        event.setCancelled(true);
-                        if (player.getHealth() > 0) player.setHealth(player.getHealth()-1);
-                    }
-                }
-
-            }
-            if(event.getEntity() instanceof org.bukkit.entity.Villager)
-            {     
-
-                if(event.getDamager() instanceof org.bukkit.entity.Arrow)
-                {
-                    player = (Player)((Arrow)event.getDamager()).getShooter();
-                    if(player == null) return;
-                    if(!parcelle.getuuidAllowed().contains(player.getUniqueId().toString()) && !player.isOp())
-                    {
-                        player.sendMessage(formatMsg.format("<light_purple>Vous ne pouvez pas tuer un animal sur une parcelle prot<e_ai>g<e_ai>"));
-                        event.setCancelled(true);
-
-                    }
-                }
-                if(event.getDamager() instanceof org.bukkit.entity.Projectile)
-                {
-                    player = (Player)((Projectile)event.getDamager()).getShooter();
-                    if(player == null) return;
-                    if(!parcelle.getuuidAllowed().contains(player.getUniqueId().toString()) && !player.isOp())
-                    {  
-                        player.sendMessage(formatMsg.format("<light_purple>Vous ne pouvez pas tuer un animal sur une parcelle prot<e_ai>g<e_ai>"));
-                        event.setCancelled(true);
-                    }
-                }
-                if(event.getDamager() instanceof org.bukkit.entity.Player)
-                {
-                    player = (Player)((Player)event.getDamager());
-                    if(player == null) return;
-                    if(!parcelle.getuuidAllowed().contains(player.getUniqueId().toString()) && !player.isOp())
-                    {   
-                        player.sendMessage(formatMsg.format("<light_purple>Vous ne pouvez pas tuer un animal sur une parcelle prot<e_ai>g<e_ai>"));
-                        player.setHealth(player.getHealth()-1);
-                        event.setCancelled(true);
-                    }
-                }
-            }
-        }
-    }
-        
+            
     @EventHandler
     public void onEntityDamage(EntityDamageEvent event) 
     {
@@ -687,7 +599,7 @@ implements Listener
     }
     
     @EventHandler(priority=EventPriority.NORMAL)
-    public void onAnimalDamageParcelle(EntityDamageByEntityEvent event) 
+    public void onDamageParcelle(EntityDamageByEntityEvent event) 
     {
         Player player;
         Parcelle parcelle = parcelleManager.getParcelle(event.getEntity().getLocation());
@@ -741,7 +653,12 @@ implements Listener
                     if (!parcelle.getuuidAllowed().contains(player.getUniqueId().toString()))
                     {
                         player.sendMessage(formatMsg.format("<light_purple>Tu ne peux pas tuer de villageois ici, tu es sur un territoire ennemi"));
-                        player.setHealth(1);
+                        if(player.getHealth()<1)
+                        {
+                            player.setHealth(0);
+                        }else{
+                            player.setHealth(player.getHealth()-1);
+                        }
                         event.setCancelled(true);
                     }
                 }
@@ -752,7 +669,12 @@ implements Listener
                     if (!parcelle.getuuidAllowed().contains(player.getUniqueId().toString()))
                     {
                         player.sendMessage(formatMsg.format("<light_purple>Tu ne peux pas tuer de villageois ici, tu es sur un territoire ennemi"));
-                        player.setHealth(1);
+                        if(player.getHealth()<1)
+                        {
+                            player.setHealth(0);
+                        }else{
+                            player.setHealth(player.getHealth()-1);
+                        }
                         event.setCancelled(true);
                     }
                 }
@@ -763,8 +685,49 @@ implements Listener
                     if (!parcelle.getuuidAllowed().contains(player.getUniqueId().toString()))
                     {
                         player.sendMessage(formatMsg.format("<light_purple>Tu ne peux pas tuer de villageois ici, tu es sur un territoire ennemi"));
-                        player.setHealth(1);
+                        if(player.getHealth()<1)
+                        {
+                            player.setHealth(0);
+                        }else{
+                            player.setHealth(player.getHealth()-1);
+                        }
+                        
                         event.setCancelled(true);
+                    }
+                }
+            }
+            if(event.getEntity() instanceof org.bukkit.entity.Player)
+            {   
+                if(event.getDamager() instanceof org.bukkit.entity.Monster || event.getEntity() instanceof org.bukkit.entity.Monster)return;
+                
+                if(event.getDamager() instanceof org.bukkit.entity.Arrow)
+                {
+                    player = (Player)((Arrow)event.getDamager()).getShooter();
+                    if(player == null) return;
+                    if(!parcelle.getuuidAllowed().equals(player.getUniqueId().toString()))
+                    {
+                        event.setDamage(event.getDamage()* 0.5);
+                    }
+                }
+                
+                if(event.getDamager() instanceof org.bukkit.entity.Projectile)
+                {
+                    player = (Player)((Projectile)event.getDamager()).getShooter();
+                    if(player == null) return;
+                    if(!parcelle.getuuidAllowed().equals(player.getUniqueId().toString()))
+                    {
+                        event.setDamage(event.getDamage()* 0.5);
+                    }
+                }
+                if(event.getDamager() instanceof org.bukkit.entity.Player)
+                {
+                    player = (Player)((Player)event.getDamager());
+                    if(player == null) return;
+                    if(!parcelle.getuuidAllowed().equals(player.getUniqueId().toString()))
+                    {
+                        event.setDamage(event.getDamage()* 0.5);
+                    }else{
+                        event.setDamage(event.getDamage()* 1.5);
                     }
                 }
             }
