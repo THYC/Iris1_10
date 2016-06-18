@@ -21,6 +21,8 @@ implements CommandExecutor
         {
             if (args.length == 0)
             {
+                player.sendMessage(Iris.formatMsg.format("<yellow>/grave clear <gray>- efface les tombes actives"));
+                player.sendMessage(Iris.formatMsg.format("<yellow>/grave info <gray>- liste les tombes actives"));
                 return true;
             }
             else if(args.length == 1)
