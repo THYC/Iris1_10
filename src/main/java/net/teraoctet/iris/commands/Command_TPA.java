@@ -1,7 +1,7 @@
 package net.teraoctet.iris.commands;
 
 import java.util.ArrayList;
-import net.teraoctet.iris.ConfigFile;
+import net.teraoctet.iris.utils.ConfigFile;
 import net.teraoctet.iris.Iris;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

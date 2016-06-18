@@ -1,5 +1,7 @@
-package net.teraoctet.iris;
+package net.teraoctet.iris.utils;
 
+import net.teraoctet.iris.Iris;
+import net.teraoctet.iris.utils.ConfigFile;
 import static net.teraoctet.iris.Iris.formatMsg;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

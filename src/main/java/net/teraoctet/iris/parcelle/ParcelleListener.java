@@ -20,6 +20,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockBurnEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.block.BlockSpreadEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -398,7 +399,7 @@ implements Listener
         Parcelle tparcelle = parcelleManager.getParcelle(to);
         if (tparcelle != null && !tparcelle.getuuidAllowed().contains(player.getUniqueId().toString()) && tparcelle.getNoTeleport()==1 && !player.isOp())
         {
-            player.sendMessage(formatMsg.format("<light_purple>TP interdit ici, cette parcelle est prot<e_ai>g<e_ai>"));
+            player.sendMessage(formatMsg.format("<light_purple>Le proprietaire a interdit le TP sur sa parcelle."));
             event.setCancelled(true);
             return;
         }
@@ -759,6 +760,14 @@ implements Listener
     public void onBreakFrame(EntityDamageEvent event)
     {
         //Bukkit.getConsoleSender().sendMessage(event.getEntityType().name());
+        //Bukkit.getConsoleSender().sendMessage(event.getCause().name());
+    }
+    
+    @EventHandler
+    public void onBlockSpreadEvent( BlockSpreadEvent event)
+    {
+        
+        //Bukkit.getConsoleSender().sendMessage(event.getSource().toString());
         //Bukkit.getConsoleSender().sendMessage(event.getCause().name());
     }
     

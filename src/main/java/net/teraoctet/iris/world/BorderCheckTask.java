@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Set;
-import net.teraoctet.iris.ConfigFile;
+import net.teraoctet.iris.utils.ConfigFile;
 import net.teraoctet.iris.Iris;
 import static net.teraoctet.iris.Iris.conf;
 import org.bukkit.Bukkit;

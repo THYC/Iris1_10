@@ -1,9 +1,13 @@
-package net.teraoctet.iris.world;
+package net.teraoctet.iris.listener;
 
 import java.sql.SQLException;
 import java.util.logging.Level;
 import net.teraoctet.iris.inventory.PlayersInventory;
 import net.teraoctet.iris.Iris;
+import net.teraoctet.iris.world.BorderCheckTask;
+import net.teraoctet.iris.world.ConfigWorld;
+import net.teraoctet.iris.world.Iworld;
+import net.teraoctet.iris.world.MobType;
 import static net.teraoctet.iris.Iris.conf;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;

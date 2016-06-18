@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import net.teraoctet.iris.ConfigFile;
+import net.teraoctet.iris.utils.ConfigFile;
 import net.teraoctet.iris.Iris;
 import static net.teraoctet.iris.Iris.ConMySQL;
 import static net.teraoctet.iris.Iris.formatMsg;

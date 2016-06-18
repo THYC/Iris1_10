@@ -2,7 +2,7 @@ package net.teraoctet.iris.listener;
 
 import static java.lang.Math.rint;
 import java.util.ArrayList;
-import net.teraoctet.iris.ConfigFile;
+import net.teraoctet.iris.utils.ConfigFile;
 import net.teraoctet.iris.Iris;
 import net.teraoctet.iris.utils.FormatMsg;
 import net.teraoctet.iris.inventory.chest;

@@ -2,7 +2,7 @@ package net.teraoctet.iris.commands;
 
 import java.util.ArrayList;
 import java.util.Set;
-import net.teraoctet.iris.ConfigFile;
+import net.teraoctet.iris.utils.ConfigFile;
 import net.teraoctet.iris.Iris;
 import static net.teraoctet.iris.Iris.formatMsg;
 import org.bukkit.Material;

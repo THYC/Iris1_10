@@ -1,6 +1,6 @@
 package net.teraoctet.iris.commands;
 
-import net.teraoctet.iris.ConfigFile;
+import net.teraoctet.iris.utils.ConfigFile;
 import net.teraoctet.iris.listener.GraveListener;
 import net.teraoctet.iris.Iris;
 import org.bukkit.command.Command;

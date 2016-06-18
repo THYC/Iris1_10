@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package net.teraoctet.iris;
+package net.teraoctet.iris.utils;
 
 
 public class Metier 

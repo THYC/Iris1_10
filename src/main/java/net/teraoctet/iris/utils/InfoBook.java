@@ -1,8 +1,10 @@
-package net.teraoctet.iris;
+package net.teraoctet.iris.utils;
 
+import net.teraoctet.iris.utils.ConfigFile;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import net.teraoctet.iris.Iris;
 import static net.teraoctet.iris.Iris.formatMsg;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

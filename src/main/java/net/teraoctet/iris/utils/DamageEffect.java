@@ -1,5 +1,6 @@
-package net.teraoctet.iris;
+package net.teraoctet.iris.utils;
 
+import net.teraoctet.iris.Iris;
 import org.bukkit.Effect;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;

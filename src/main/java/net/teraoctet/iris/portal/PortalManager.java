@@ -1,5 +1,6 @@
 package net.teraoctet.iris.portal;
 
+import net.teraoctet.iris.utils.InfoBook;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;

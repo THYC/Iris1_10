@@ -1,5 +1,10 @@
 package net.teraoctet.iris;
 
+import net.teraoctet.iris.utils.DeadMessages;
+import net.teraoctet.iris.utils.NamePlates;
+import net.teraoctet.iris.utils.InfoBook;
+import net.teraoctet.iris.utils.ConfigFile;
+import net.teraoctet.iris.utils.DamageEffect;
 import net.teraoctet.iris.listener.GraveListener;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,7 +27,7 @@ import net.teraoctet.iris.utils.FormatMsg;
 import net.teraoctet.iris.world.BorderManager;
 import net.teraoctet.iris.world.ConfigWorld;
 import net.teraoctet.iris.world.MultiWorld;
-import net.teraoctet.iris.world.WorldListener;
+import net.teraoctet.iris.listener.WorldListener;
 import org.bukkit.Bukkit;
 import static org.bukkit.Bukkit.broadcastMessage;
 import org.bukkit.Location;

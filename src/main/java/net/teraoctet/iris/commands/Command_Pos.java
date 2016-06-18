@@ -1,7 +1,7 @@
 package net.teraoctet.iris.commands;
 
 import java.text.DecimalFormat;
-import net.teraoctet.iris.ConfigFile;
+import net.teraoctet.iris.utils.ConfigFile;
 import net.teraoctet.iris.Iris;
 import org.bukkit.Location;
 import org.bukkit.command.Command;

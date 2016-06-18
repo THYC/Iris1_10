@@ -1,4 +1,4 @@
-package net.teraoctet.iris;
+package net.teraoctet.iris.utils;
 import org.bukkit.Material;
 
 public class Sapling

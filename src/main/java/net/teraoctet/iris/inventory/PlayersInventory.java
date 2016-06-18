@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.ListIterator;
 import java.util.Map;
-import net.teraoctet.iris.ConfigFile;
+import net.teraoctet.iris.utils.ConfigFile;
 import net.teraoctet.iris.Iris;
 import static net.teraoctet.iris.Iris.*;
 import net.teraoctet.iris.utils.ConnexionMySQL;
