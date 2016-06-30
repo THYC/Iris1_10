@@ -2,6 +2,9 @@ package net.teraoctet.iris.commands;
 
 import net.teraoctet.iris.utils.ConfigFile;
 import net.teraoctet.iris.Iris;
+import static net.teraoctet.iris.Iris.cooldowns;
+import static net.teraoctet.iris.Iris.formatMsg;
+import static net.teraoctet.iris.Iris.plugin;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -15,6 +18,11 @@ implements CommandExecutor
 {
     private static final ConfigFile conf = new ConfigFile();
     
+    public Command_Home(Iris instance) 
+    {
+        plugin = instance;
+    }
+    
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args)
     {
@@ -26,11 +34,23 @@ implements CommandExecutor
             sender.sendMessage(Iris.formatMsg.format(conf.getStringYAML("messages.yml","cmdNoPlayer","<dark_aqua>Commande r<e_ai>serv<e_ai> aux joueurs")));
             return true;
         }
+        
+        int cooldownTime = conf.getIntYAML("config.yml","CoolDownTime",60);
+        if(cooldowns.containsKey(player.getDisplayName())) 
+        {
+            long secondsLeft = ((cooldowns.get(player.getDisplayName())/1000)+cooldownTime) - (System.currentTimeMillis()/1000);
+            if(secondsLeft>0) {
+                player.sendMessage(formatMsg.format("<gray>Vous ne pouvez pas utiliser cette commande avant " + secondsLeft + " secondes!"));
+                return true;
+            }
+        }
+        cooldowns.put(player.getDisplayName(), System.currentTimeMillis());
+            
         if (args.length == 0)
         {
             home = "home";
             world= player.getLocation().getWorld().getName();
-        }
+        }            
         else if(args.length == 1)
         {
             if (sender.isOp() || sender.hasPermission("iris.home.multiple"))
@@ -76,8 +96,10 @@ implements CommandExecutor
                 conf.setDoubleYAML("userdata",player.getUniqueId() + ".yml", "LastLocation.Z", lastLocation.getZ());
                 conf.setStringYAML("userdata",player.getUniqueId() + ".yml", "LastLocation.World", lastLocation.getWorld().getName());   
                 
-                player.teleport(homeLocation);
-                player.sendMessage(Iris.formatMsg.format(conf.getStringYAML("messages.yml", "cmdHome"))); 
+                player.sendMessage(Iris.formatMsg.format("<aqua>DELAI IMPOSE : Vous serez TP sur votre home dans environ 10s environ."));
+                plugin.scheduleTP(player, 200L, homeLocation);
+                //player.teleport(homeLocation);
+                //player.sendMessage(Iris.formatMsg.format(conf.getStringYAML("messages.yml", "cmdHome"))); 
             }
             else
             {

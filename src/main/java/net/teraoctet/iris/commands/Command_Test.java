@@ -98,6 +98,7 @@ public class Command_Test  implements CommandExecutor
                 parcelleManager.listParcelle(player, true);
             }
             
+                       
             /*ItemMeta Tracker = player.getPlayer().getItemInHand().getItemMeta();
             Iris.log.info(Tracker.getDisplayName());
             if (Tracker.getDisplayName().equalsIgnoreCase("§c§lTRACKER"))

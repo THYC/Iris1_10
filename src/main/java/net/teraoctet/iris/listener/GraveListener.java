@@ -1,138 +1,176 @@
 package net.teraoctet.iris.listener;
 
 import static java.lang.Math.rint;
-import java.util.ArrayList;
+import java.util.Random;
+import java.util.Set;
 import net.teraoctet.iris.utils.ConfigFile;
 import net.teraoctet.iris.Iris;
+import static net.teraoctet.iris.Iris.parcelleManager;
 import net.teraoctet.iris.utils.FormatMsg;
-import net.teraoctet.iris.inventory.chest;
+import net.teraoctet.iris.parcelle.Parcelle;
 import org.bukkit.Bukkit;
-import static org.bukkit.Bukkit.createInventory;
+import org.bukkit.ChatColor;
+import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import static org.bukkit.Material.BEDROCK;
+import org.bukkit.Sound;
 import org.bukkit.World;
-import org.bukkit.block.Block;
-import org.bukkit.block.Sign;
+import org.bukkit.block.Chest;
+import org.bukkit.block.DoubleChest;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.util.EulerAngle;
 
 public class GraveListener
   implements Listener
 {
     private final Iris plugin;
     private static final ConfigFile conf = new ConfigFile();
+    private final FormatMsg formatMsg = new FormatMsg();
+    private boolean graveCrypte = false;
     
     public GraveListener(Iris plugin)
     {
         this.plugin = plugin;
     }
-  
-    private final FormatMsg formatMsg = new FormatMsg();
-    private String NomDuJoueur;
-    public static ArrayList<chest> inventorys = new ArrayList<>();
-
-    /*public GraveListener() 
-    {
-        
-    }*/
-       
+    
     @EventHandler(priority = EventPriority.NORMAL)
     public void onPlayerDeath(PlayerDeathEvent event)
     {
         final Player player = event.getEntity();
-        NomDuJoueur = player.getName();
+        graveCrypte = false;
      
         if (player.hasPermission("iris.grave"))
         {
-            /*  Création du panneaux */
-            Location location = player.getLocation();
-            location.setY(rint(location.getY()));
-            location = controlBlock(location.add(0, -1, 0));
-            World newBlock = location.getWorld();
-            final Block nb = newBlock.getBlockAt(location);
-            final Block nb2 = nb.getRelative(0, 1, 0);
+            Location graveLoc = player.getLocation();
             
-            player.sendMessage(formatMsg.format(conf.getStringYAML("messages.yml", "graveSpawn"),player));
-            player.sendMessage(formatMsg.format("<aqua>Trouve ta tombe represente par un block de bedrock et fait un click droit dessus pour reprendre ton stuff"));
-            player.sendMessage(formatMsg.format("<yellow>position de ta tombe : xyz  " + nb.getLocation().getBlockX() + " " + nb.getLocation().getBlockY() + " " + + nb.getLocation().getBlockZ()));
+            graveLoc.setY(rint(graveLoc.getY()));
+            graveLoc = controlBlock(graveLoc);
+            graveLoc = controlBlockBas(graveLoc);
+            Location graveChest = graveLoc;
             
-            try
-            {                
-                nb.setType(Material.BEDROCK);            
-                nb2.setType(Material.SIGN_POST);            
-                String playerName = player.getName();
-                Sign sign = (Sign)nb2.getState();
+            if(graveCrypte == false)
+            {
+                Parcelle parcelle = parcelleManager.getParcelle(graveLoc);
+                if (parcelle == null){
+                    graveChest = graveChest.add(0, -2, 0);
+                }
+                Location graveChest2 = new Location(graveChest.getWorld(),graveChest.getBlockX()+1,graveChest.getBlockY(),graveChest.getBlockZ());
+                                
+                //player.sendMessage(graveChest.toString());
+                //player.sendMessage(graveChest2.toString());
+                                 
+                player.sendMessage(formatMsg.format(conf.getStringYAML("messages.yml", "graveSpawn"),player));
+                player.sendMessage(formatMsg.format("<aqua>Une tombe contenant ton stuff a été créé"));
+                player.sendMessage(formatMsg.format("<yellow>position de ta tombe : xyz  " + graveLoc.getBlockX() + " " + graveLoc.getBlockY() + " " + + graveLoc.getBlockZ()));
 
-                String Line1 = formatMsg.format(conf.getStringYAML("messages.yml", "graveLine1"), player);
-                String Line3 = formatMsg.format(conf.getStringYAML("messages.yml", "graveLine3"), player);
-                String Line4 = formatMsg.format(conf.getStringYAML("messages.yml", "graveLine4"), player);
-                sign.setLine(0, Line1);
-                sign.setLine(1, playerName);
-                sign.setLine(2, Line3);
-                sign.setLine(3, Line4);
-                sign.update();
-                
-                /* création inventaire */
-                Inventory grave = createInventory(null, 54, "Tombe de " + NomDuJoueur);
-                putInventoryInChests(player,grave);
-                chest invent = new chest(grave,player.getName(),rint(nb.getX()),rint(nb.getZ()), rint(nb.getY()), nb.getWorld().getName());
-                inventorys.add(invent);
-                event.getDrops().clear(); 
-            }
-            catch(Exception ex)
-            {
-                player.sendMessage(formatMsg.format("<red>ERREUR <yellow>Votre tombe n'a pu <e_cir>tre plac<e_ai>"));
-            }
-                        
-            this.plugin.getServer().getScheduler().scheduleSyncDelayedTask(this.plugin, new Runnable()
-            {
-                @Override
-                public void run()
+                World world = player.getWorld();
+                Inventory inventory = player.getInventory();
+                ItemStack[] drops = inventory.getContents();
+
+                event.getDrops().clear();
+                String type = graveChest.getBlock().getType().name();
+                world.getBlockAt(graveChest).setType(Material.CHEST);
+                world.getBlockAt(graveChest2).setType(Material.CHEST);
+
+                Chest chest = (Chest)world.getBlockAt(graveChest).getState();
+                for (ItemStack itemStack : drops)
                 {
-                    nb.getLocation().getBlock().setType(Material.AIR);
-                    nb2.getLocation().getBlock().setType(Material.AIR);
-                    player.sendMessage(formatMsg.format(conf.getStringYAML("messages.yml", "graveDespawn"),player));
-                    if (GraveListener.inventorys.size() > 0)
+                    if (itemStack != null) 
                     {
-                        inventorys.remove(0);
+                        chest.getInventory().addItem(new ItemStack[] { itemStack });
                     }
                 }
-            }, 10000);
+                String loc = graveChest.getWorld() + "-" + graveChest.getBlockX() + "-" + graveChest.getBlockY() + "-" + graveChest.getBlockZ();
+                conf.setStringYAML("grave.yml",loc + ".block",type);
+                
+                ItemStack is = new ItemStack(Material.SKULL_ITEM, 1, (byte) 3);
+                SkullMeta meta = (SkullMeta)is.getItemMeta();
+                meta.setOwner(player.getName());
+                is.setItemMeta(meta);
+                                    
+                double coef = 57.295779513082323D;
+                ArmorStand as = (ArmorStand)graveLoc.add(0, 0, 0).getWorld().spawn(graveLoc.add(0, 0, 0), ArmorStand.class);
+                as.setVisible(false);
+                as.setCanPickupItems(false);
+                as.setRemoveWhenFarAway(false);
+                as.setArms(false);
+                as.setBasePlate(false);
+                as.setCustomName(ChatColor.DARK_PURPLE + "Ci git : " + player.getName());
+                as.setCustomNameVisible(true);
+                as.setGravity(false);
+                as.setSmall(true);
+                as.setInvulnerable(true);
+                as.setCanPickupItems(false);
+                as.setHelmet(is);
+                as.setGlowing(false);
+                //as.setItemInHand(new ItemStack(Material.WOOD_AXE, 1, (byte)0));
+                //as.setRightArmPose(new EulerAngle(-40.0D / coef, 42.0D / coef, -17.0D / coef));
+                as.setHeadPose(new EulerAngle(-40.0D / coef, 52.0D / coef, -17.0D / coef));
+                as.setLeftLegPose(new EulerAngle(-40.0D / coef, 42.0D / coef, -17.0D / coef));
+                
+                this.plugin.getServer().getScheduler().scheduleSyncDelayedTask(this.plugin, new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        as.remove();
+                    }
+                }, 5000);
+            
+            }else{
+                player.sendMessage(formatMsg.format(conf.getStringYAML("messages.yml", "graveSpawn"),player));
+                player.sendMessage(formatMsg.format("<aqua>Ta tombe n'a pas peut être placé, les restes de ton corp on été mis dans la crypte"));
+                player.sendMessage(formatMsg.format("<yellow>La crypte se trouve au lobby, court chercher ton stuff"));
+                
+                World world = graveLoc.getWorld();
+                Inventory inventory = player.getInventory();
+                ItemStack[] drops = inventory.getContents();
+      
+                event.getDrops().clear();
+                Chest chest = (Chest)world.getBlockAt(graveLoc).getState();
+                for (ItemStack itemStack : drops)
+                {
+                    if (itemStack != null) 
+                    {
+                        chest.getInventory().addItem(new ItemStack[] { itemStack });
+                    }
+                }
+            }
         }
     }
-       
+    
     @EventHandler
-    public void onGraveInteract(PlayerInteractEvent event)
+    public void CloseGrave(InventoryCloseEvent event) 
     {
-        final Player player = (Player) event.getPlayer();
-        if (event.getAction() == Action.RIGHT_CLICK_BLOCK && event.getClickedBlock().getType().equals(BEDROCK))
+        Player p = (Player)event.getPlayer();
+        if(event.getInventory().getHolder() instanceof DoubleChest)
         {
-            if (player.hasPermission("iris.grave"))
-            {
-                Block b = event.getClickedBlock();
-                for(chest grave : inventorys)
-                {
-                    if (grave.locationX == rint(b.getLocation().getBlockX()) && grave.locationZ == rint(b.getLocation().getBlockZ()))
-                    {
-                        player.openInventory(grave.grave);
-                    }
-                }               
-            }
-            else
-            {
-                player.sendMessage(formatMsg.format(conf.getStringYAML("messages.yml", "noPermission"), player));
-            }
+            Location locChest = event.getInventory().getLocation();
+            String locChestString = locChest.getWorld() + "-" + locChest.getBlockX() + "-" + locChest.getBlockY() + "-" + locChest.getBlockZ();
+            if(conf.IsConfigYAML("grave.yml",locChestString))breakGrave(locChest,locChestString);
         }
-     }
+    }
+    
+    private void breakGrave(Location locChest, String locChestString){
+        locChest.getBlock().breakNaturally();
+        Location loc = new Location(locChest.getWorld(),locChest.getBlockX()+1,locChest.getBlockY(),locChest.getBlockZ());
+        loc.getBlock().breakNaturally();
+        locChest.getBlock().getLocation().getWorld().playEffect(locChest.getBlock().getLocation(), Effect.MOBSPAWNER_FLAMES, 20);
+        Material mat = Material.getMaterial(conf.getStringYAML("grave.yml",locChestString + ".block","DIRT"));
+        locChest.getBlock().setType(mat);
+        loc.getBlock().setType(mat);
+        conf.delNodeYAML("grave.yml",locChestString);
+    }
     
     public void putInventoryInChests(Player player, Inventory grave)
     {
@@ -148,23 +186,7 @@ public class GraveListener
         players_inventory.clear();
         player.getEquipment().clear();
     }
-    
-    public static void removeInventory()
-    {
-        for(chest grave : inventorys)
-        {
-            double X = grave.locationX;
-            double Y = grave.locationY;
-            double Z = grave.locationZ;
-                
-            World worldInstance = Bukkit.getWorld(grave.world);
-            Location location = new Location(worldInstance, X, Y, Z);
-            Block block = worldInstance.getBlockAt(location);
-            block.setType(Material.AIR);
-        }  
-        inventorys.removeAll(inventorys);
-    }
-    
+        
     public Location controlBlock(Location location)
     {                
         if (!location.getBlock().getType().equals(Material.AIR) 
@@ -222,7 +244,7 @@ public class GraveListener
                             {
                                 location.setY(location.getY()+1);
                                 location.setZ(location.getZ()+1);
-                                controlBlock(location);
+                                location = controlBlock(location);
                                 return location;
                             }
                         }
@@ -231,5 +253,82 @@ public class GraveListener
             }
         }
         return location;
+    }
+    
+    public Location controlBlockBas(Location location)
+    {                
+        if(location.getY() < 0 || location.getBlock().getType().equals(Material.STATIONARY_LAVA)){
+            graveCrypte = true;
+            location = getCrypte();
+            return location;
+        }
+        if (location.getBlock().getType().equals(Material.AIR) 
+                || location.getBlock().getType().equals(Material.SNOW)
+                || location.getBlock().getType().equals(Material.STATIONARY_WATER))
+        { 
+            location.setY(location.getY()-1);
+            location = controlBlockBas(location);
+
+            return location;
+        }
+        location.setY(location.getY()+1);
+        return location;
+    }
+    
+    public Location controlBlockRive(Location location)
+    {                
+        location = location.add(1, 0, 0);
+        if (location.getBlock().getType().equals(Material.AIR) && location.add(0, 1, 0).getBlock().getType().equals(Material.AIR) && location.add(0, 2, 0).getBlock().getType().equals(Material.AIR))
+        {
+            return location;
+        }else{
+            location = location.add(-1, 0, 1);
+            if (location.getBlock().getType().equals(Material.AIR)&& location.add(0, 1, 0).getBlock().getType().equals(Material.AIR) && location.add(0, 2, 0).getBlock().getType().equals(Material.AIR))
+            {
+                return location;
+            }
+            else
+            {
+                location = location.add(-1, 0, -1);
+                if (location.getBlock().getType().equals(Material.AIR)&& location.add(0, 1, 0).getBlock().getType().equals(Material.AIR) && location.add(0, 2, 0).getBlock().getType().equals(Material.AIR))
+                {
+                    return location;
+                }
+                else
+                {
+                    location = location.add(1, 0, -1);
+                    if (location.getBlock().getType().equals(Material.AIR)&& location.add(0, 1, 0).getBlock().getType().equals(Material.AIR) && location.add(0, 2, 0).getBlock().getType().equals(Material.AIR))
+                    {
+                        return location;
+                    }
+                }
+            }
+        }
+        return location;
+    }
+    
+    public Location getCrypte()
+    {
+        int X = 0;
+        int Y = 100;
+        int Z = 0;
+        String world = "azycko";
+        
+        Set<String> crypteList = conf.getKeysYAML("crypte.yml","crypte");
+        if(!crypteList.isEmpty())
+        {
+            int count = crypteList.size();
+            Random rand = new Random();
+            int pos = rand.nextInt(count - 1 + 1) + 1;
+
+            X = conf.getIntYAML("crypte.yml","crypte." + String.valueOf(pos) +".X",0);
+            Y = conf.getIntYAML("crypte.yml","crypte." + String.valueOf(pos) +".Y",0);
+            Z = conf.getIntYAML("crypte.yml","crypte." + String.valueOf(pos) +".Z",0);
+            world = conf.getStringYAML("crypte.yml","crypte." + String.valueOf(pos) + ".world","azycko");
+        }
+      
+        World worldInstance = Bukkit.getWorld(world);
+        Location spawnCrypte = new Location(worldInstance, X, Y, Z);
+        return spawnCrypte;
     }
 }

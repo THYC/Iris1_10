@@ -3,6 +3,7 @@ package net.teraoctet.iris.commands;
 import java.util.ArrayList;
 import net.teraoctet.iris.utils.ConfigFile;
 import net.teraoctet.iris.Iris;
+import static net.teraoctet.iris.Iris.formatMsg;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -25,7 +26,7 @@ implements CommandExecutor
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
     {
-        final Player player = (Player)sender;
+        final Player player = (Player)sender;            
         if (cmd.getName().equalsIgnoreCase("tpa") && player.hasPermission("iris.tpa"))
         {
             try
@@ -56,7 +57,7 @@ implements CommandExecutor
                     Player toPlayer = player.getServer().getPlayer(args[0]);
                     player.sendMessage(Iris.formatMsg.format("<yellow>Veuillez patienter, demande envoy<e_ai>e ..."));
                     toPlayer.sendMessage(Iris.formatMsg.format("<yellow>Acceptez vous que <aqua><player> se t<e_ai>l<e_ai>porte sur vous ?",player));
-                    toPlayer.sendMessage(Iris.formatMsg.format("<yellow>Vous avez 30s pour accepter cette demande en tapant : <green>/tpaccept <yellow>refuse : /tpdeny"));
+                    toPlayer.sendMessage(Iris.formatMsg.format("<yellow>Vous avez 2mn pour accepter cette demande en tapant : <green>/tpaccept <yellow>refuse : /tpdeny"));
                                         
                     this.plugin.getServer().getScheduler().runTaskLater(this.plugin, new Runnable()
                     {
@@ -73,7 +74,7 @@ implements CommandExecutor
                                 
                             }
                         }
-                    }, 600);                   
+                    }, 2400);                   
                 }
                 return true;
             }
@@ -120,7 +121,10 @@ implements CommandExecutor
             conf.setDoubleYAML("userdata",fromPlayer.getUniqueId() + ".yml", "LastLocation.Z", lastLocation.getZ());
             conf.setStringYAML("userdata",fromPlayer.getUniqueId() + ".yml", "LastLocation.World", lastLocation.getWorld().getName());
             fromPlayer.sendMessage(Iris.formatMsg.format(conf.getStringYAML("messages.yml", "cmdTP")));
-            fromPlayer.teleport(toPlayer);
+            
+            player.sendMessage(formatMsg.format("<gray>Tu sera TP dans 20s environ"));
+            plugin.scheduleTP(fromPlayer, 200L, toPlayer.getLocation());
+            //fromPlayer.teleport(toPlayer);
             
             Atpa.remove(index);
             return true;

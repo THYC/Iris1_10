@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,9 +24,11 @@ import net.teraoctet.iris.utils.Economy;
 import org.bukkit.Bukkit;
 import static org.bukkit.Bukkit.broadcastMessage;
 import org.bukkit.Color;
+import org.bukkit.Effect;
 import org.bukkit.FireworkEffect;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
@@ -33,20 +36,20 @@ import org.bukkit.entity.Animals;
 import org.bukkit.entity.Chicken;
 import org.bukkit.entity.Cow;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Fireball;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Horse;
-import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Pig;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Rabbit;
 import org.bukkit.entity.Sheep;
-import org.bukkit.entity.Snowball;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -54,6 +57,7 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerAchievementAwardedEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -76,6 +80,7 @@ import ru.tehkode.permissions.bukkit.PermissionsEx;
         Iris plugin;
         private Player p;
         public Map<Player, Long> lastTimes = new HashMap();
+        public HashMap<String, Long> cooldowns = new HashMap<>();
 
         public PlayerListener(Iris plugin)
         {
@@ -88,6 +93,8 @@ import ru.tehkode.permissions.bukkit.PermissionsEx;
             Player player = event.getPlayer();
             p = player;
             
+            //player.sendTitle(WorldPVP, WorldPVP);
+            //player.showPlayer(player);
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "title " + player.getDisplayName() + " times 10 80 10");
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "title " + player.getDisplayName() + " subtitle {\"text\":\"Inscrivez vous sur notre forum \",\"color\":\"green\",\"extra\":[{\"text\":\" http://Craft.Teraoctet.net\",\"color\":\"yellow\"}]}");
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "title " + player.getDisplayName() + " title {\"text\":\"Bienvenue sur\",\"color\":\"green\",\"extra\":[{\"text\":\" Craft.Teraoctet\",\"color\":\"yellow\"}]}");
@@ -265,35 +272,23 @@ import ru.tehkode.permissions.bukkit.PermissionsEx;
                 ru.tehkode.permissions.bukkit.PermissionsEx.getUser(player).removeGroup("vip");
             }
         }
-        
-        /*@EventHandler(priority=EventPriority.LOWEST)
-        public void onBookDrop(PlayerDropItemEvent e)
-        {
-            Player player = e.getPlayer();
-            Item item = e.getItemDrop();
-            List<String> list = conf.getListYAML("books.yml","protected");
-            if ((list != null) && (!list.isEmpty()) && (player != null) && (item != null))
-            {
-                ItemStack book = item.getItemStack();
-                if ((book != null) && (book.getType() == Material.WRITTEN_BOOK))
-                {
-                    BookMeta bookMeta = (BookMeta)book.getItemMeta();
-                    for (String titre : list) 
-                    {
-                        if (conf.getStringYAML("books.yml",titre + ".title").equalsIgnoreCase(bookMeta.getTitle()))
-                        {
-                            player.sendMessage("Vous ne pouvez pas jeter ce livre!");
-                            e.setCancelled(true);
-                        }
-                    }
-                }
-            }
-        }*/
-        
+                
         @EventHandler
         public void onPlayerQuit(PlayerQuitEvent event) 
         {
             Player player = event.getPlayer();
+            
+            int cooldownTime = conf.getIntYAML("config.yml","CoolDownTime",120);
+            if(cooldowns.containsKey(player.getDisplayName())) 
+            {
+                long secondsLeft = ((cooldowns.get(player.getDisplayName())/1000)+cooldownTime) - (System.currentTimeMillis()/1000);
+                if(secondsLeft>0) {
+                    player.sendMessage(formatMsg.format("<gray>Vous ne pouvez pas utiliser cette commande avant " + secondsLeft + " secondes!"));
+                    event.getPlayer().setHealth(0);
+                }
+            }
+            cooldowns.put(player.getDisplayName(), System.currentTimeMillis());
+        
             event.setQuitMessage(formatMsg.format(conf.getStringYAML("messages.yml","quitMsg"),player));
             
             if(!"NULL".equals(conf.getStringYAML("userdata",event.getPlayer().getUniqueId()+ ".yml", "Autel","NULL")))
@@ -468,27 +463,7 @@ import ru.tehkode.permissions.bukkit.PermissionsEx;
         {
             Player player = event.getPlayer();
             UUID playerID = event.getPlayer().getUniqueId();
-             /*           
-            if(player.hasPermission("iris.chatradius") && !player.isOp())
-            {
-                long radius = conf.getLongYAML("config.yml", "Chat.radius", 20L);
-                radius *= radius;
-
-                for (Player players : Bukkit.getServer().getOnlinePlayers()) 
-                {
-                    if(players.getLocation().distance(player.getLocation()) < radius) 
-                    {
-                        PermissionUser user = PermissionsEx.getPermissionManager().getUser(playerID);               
-                        String prefix = user.getPrefix(player.getWorld().getName());
-                        String suffix = user.getSuffix(player.getWorld().getName());
-                        String hordeName = conf.getStringYAML("userdata",player.getUniqueId() + ".yml", "horde");
-                        //players.sendMessage(formatMsg.format(suffix + prefix + "<PLAYER>: <white>" + event.getMessage(), player));
-                        //return;
-                    }
-                }
-            }*/
-            
-            //else 
+             
             if (event.getMessage().contains("delock") && !event.getMessage().contains("/delock"))
             {
                 player.sendMessage(formatMsg.format("<light_purple>Tu as oubli<e_ai> le '/', recommences :)"));
@@ -512,12 +487,12 @@ import ru.tehkode.permissions.bukkit.PermissionsEx;
         }
                 
         @EventHandler
-        public void ClickNPC(PlayerInteractEntityEvent event)
+        public void onClickEntity(PlayerInteractEntityEvent event)
         {
             final Player player = event.getPlayer();
             Entity entity = event.getRightClicked();
                         
-            /*if(event.getPlayer().isOp())
+            if(event.getPlayer().isOp())
             {
                 
                 //final LivingEntity entity = event.getRightClicked();
@@ -538,34 +513,29 @@ import ru.tehkode.permissions.bukkit.PermissionsEx;
                 }
                 
                 Set<String> listNPC = conf.getKeysYAML("npc.yml","NPC");
-                for (String npc : listNPC)
-                {
-                    if(entity.getUniqueId().toString().contains(npc))
-                    {
-                        player.sendMessage(formatMsg.format(conf.getStringYAML("npc.yml","NPC." + npc + ".quete","<gray>Bonjour <player>"),player));
-                        //player.sendMessage("fait un clique droit sur le panneaux pour entrer.");
-                    }      
-                }
-                
+                listNPC.stream().filter((npc) -> (entity.getUniqueId().toString().contains(npc))).forEach((npc) -> {
+                    player.sendMessage(formatMsg.format(conf.getStringYAML("npc.yml","NPC." + npc + ".quete","<gray>Bonjour <player>"),player));
+                    //player.sendMessage("fait un clique droit sur le panneaux pour entrer.");
+                }); 
                 //entity.setPassenger(player);
                 //entity.setMetadata("Beber", mv);
                 
-            }*/
+            }
+            
             Parcelle parcelle = parcelleManager.getParcelle(entity.getLocation());
             if (parcelle != null && !parcelle.getOwner().contains(player.getUniqueId().toString()) && !player.isOp())
             {
                 if(entity instanceof org.bukkit.entity.ItemFrame)
                 {  
-                    ItemFrame frame = (ItemFrame)entity;
                     event.setCancelled(true);
                 }  
             }
             
-            if (player.getItemInHand().getType() == Material.STICK) 
+            if (player.getItemOnCursor().getType() == Material.STICK) 
             {
-                if (player.getItemInHand().hasItemMeta())
+                if (player.getItemOnCursor().hasItemMeta())
                 {
-                    if (player.getItemInHand().getItemMeta().getDisplayName().contains("eleveur"))
+                    if (player.getItemOnCursor().getItemMeta().getDisplayName().contains("eleveur"))
                     {
                         if(entity instanceof Animals)
                         {     
@@ -695,9 +665,6 @@ import ru.tehkode.permissions.bukkit.PermissionsEx;
         public void onPlayerAchievementEvent(PlayerAchievementAwardedEvent event)
         {
             Player player = event.getPlayer();
-            //PermissionUser user = PermissionsEx.getUser(player);
-            //String world = null;
-
             if(conf.getBooleanYAML("config.yml", "promotionActif",false)== false)return;
                         
             String group = conf.getStringYAML("config.yml", event.getAchievement().name() + ".group","NULL");
@@ -739,11 +706,11 @@ import ru.tehkode.permissions.bukkit.PermissionsEx;
         public void onPlayerInteractBlock(PlayerInteractEvent event) 
         {
             Player player = event.getPlayer();
-            if (player.getItemInHand().getType() == Material.BLAZE_ROD) 
+            if (player.getItemOnCursor().getType() == Material.BLAZE_ROD) 
             {
-                if (player.getItemInHand().hasItemMeta())
+                if (player.getItemOnCursor().hasItemMeta())
                 {
-                    if (player.getItemInHand().getItemMeta().getDisplayName().contains("Zeus"))
+                    if (player.getItemOnCursor().getItemMeta().getDisplayName().contains("Zeus"))
                     {
                         //doThrow((Fireball)player.launchProjectile(Fireball.class));
                         //this.lastTimes.put(player, System.currentTimeMillis());
@@ -841,10 +808,9 @@ import ru.tehkode.permissions.bukkit.PermissionsEx;
                 player.teleport(spawn);
                 event.setRespawnLocation(spawn);
             }
-            if (player.hasPermission("iris.horde")) player.setPassenger(player.getWorld().spawn(player.getLocation(), Snowball.class));
         }
         
-        @EventHandler(priority=EventPriority.LOWEST)
+       @EventHandler(priority=EventPriority.LOWEST)
         public void ondeath(final PlayerDeathEvent e)
         {
             if (!Iris.conf.getBooleanYAML("config.yml","AutoRespawn",true)) 
@@ -856,30 +822,23 @@ import ru.tehkode.permissions.bukkit.PermissionsEx;
                 return;
             }
             
-            this.plugin.getServer().getScheduler().scheduleSyncDelayedTask(this.plugin, new Runnable()
-            {
-                @Override
-                public void run()
-                {
-                    Player p = e.getEntity();
-                    try
+            this.plugin.getServer().getScheduler().scheduleSyncDelayedTask(this.plugin, () -> {
+                Player p1 = e.getEntity();
+                try {
+                    Object nmsPlayer = p1.getClass().getMethod("getHandle", new Class[0]).invoke(p1, new Object[0]);
+                    Object packet = Class.forName(nmsPlayer.getClass().getPackage().getName() + ".PacketPlayInClientCommand").newInstance();
+                    Class<?> enumClass = Class.forName(nmsPlayer.getClass().getPackage().getName() + ".EnumClientCommand");
+                    for (Object ob : enumClass.getEnumConstants())
                     {
-                        Object nmsPlayer = p.getClass().getMethod("getHandle", new Class[0]).invoke(p, new Object[0]);
-                        Object packet = Class.forName(nmsPlayer.getClass().getPackage().getName() + ".PacketPlayInClientCommand").newInstance();
-                        Class<?> enumClass = Class.forName(nmsPlayer.getClass().getPackage().getName() + ".EnumClientCommand");
-                        for (Object ob : enumClass.getEnumConstants()) 
+                        if (ob.toString().equals("PERFORM_RESPAWN")) 
                         {
-                            if (ob.toString().equals("PERFORM_RESPAWN")) 
-                            {
-                                packet = packet.getClass().getConstructor(new Class[] { enumClass }).newInstance(new Object[] { ob });
-                            }
+                            packet = packet.getClass().getConstructor(new Class[] { enumClass }).newInstance(new Object[] { ob });
                         }
-                        Object con = nmsPlayer.getClass().getField("playerConnection").get(nmsPlayer);
-                        con.getClass().getMethod("a", new Class[] { packet.getClass() }).invoke(con, new Object[] { packet });
                     }
-                    catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | ClassNotFoundException | InstantiationException | NoSuchFieldException t)
-                    {
-                    }
+                    Object con = nmsPlayer.getClass().getField("playerConnection").get(nmsPlayer);
+                    con.getClass().getMethod("a", new Class[] { packet.getClass() }).invoke(con, new Object[] { packet });
+                }catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | ClassNotFoundException | InstantiationException | NoSuchFieldException t)
+                {
                 }
             }, 2L);
         }
@@ -1028,6 +987,37 @@ import ru.tehkode.permissions.bukkit.PermissionsEx;
             }
         }
         
+        @EventHandler
+        public void onPlayerInteractAtEntity(PlayerInteractAtEntityEvent event)
+        {
+            Player player = event.getPlayer();
+            Entity en = event.getRightClicked();
+            //ItemStack is event.getHand().HAND.name()
+            
+            //player.sendMessage(en.getName());
+            
+            if(en.getName().contains("Ci git")){
+                player.playSound(player.getPlayer().getLocation(),Sound.ENTITY_WITHER_DEATH,250,4);
+                en.getLocation().getWorld().playEffect(en.getLocation(), Effect.MOBSPAWNER_FLAMES, 20);
+                en.remove();
+                return;
+            }
+            
+            String name = en.getName().replace(" ", "_");
+            List<String> msg = conf.getListYAML("armorstand.yml",name);
+            
+            if(!msg.isEmpty())
+            {
+                for(String s : msg)
+                {
+                    player.sendMessage(formatMsg.format(s,player));
+                }  
+            }
+            
+            if(!player.isOp())event.setCancelled(true);
+        }
+    
+        
         //@EventHandler
         //public void onPotionSplash(PotionSplashEvent event)
         //{
@@ -1070,5 +1060,6 @@ import ru.tehkode.permissions.bukkit.PermissionsEx;
             }
         }*/
     }
+
 
 

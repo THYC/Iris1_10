@@ -1,7 +1,6 @@
 package net.teraoctet.iris.commands;
 
 import net.teraoctet.iris.utils.ConfigFile;
-import net.teraoctet.iris.listener.GraveListener;
 import net.teraoctet.iris.Iris;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -30,10 +29,10 @@ implements CommandExecutor
                 switch (args[0]) 
                 {
                     case "clear":
-                        GraveListener.removeInventory();
+                        //GraveListener.removeInventory();
                         return true;
                     case "info":
-                        player.sendMessage(Iris.formatMsg.format(conf.getStringYAML("messages.yml", "cmdGraveInfo","<aqua>Nombre de tombe active : "), player) + String.valueOf(GraveListener.inventorys.size()));
+                        //player.sendMessage(Iris.formatMsg.format(conf.getStringYAML("messages.yml", "cmdGraveInfo","<aqua>Nombre de tombe active : "), player) + String.valueOf(GraveListener.inventorys.size()));
                         return true;
                 }
             }

@@ -35,6 +35,7 @@ import org.bukkit.Material;
 import org.bukkit.Statistic;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.inventory.Inventory;
@@ -81,6 +82,7 @@ implements Listener
     public Inventory inv;
     public Inventory invE;
     public static String WorldPVP;
+    public static final Map<String, Long> cooldowns = new HashMap<>();
         
     @Override
     public void onEnable() 
@@ -105,6 +107,9 @@ implements Listener
         conf.ConfigFileYAML("npc.yml");
         conf.ConfigFileYAML("player.yml");
         conf.paramFile("", "plugins//Iris//message");
+        conf.ConfigFileYAML("crypte.yml");
+        conf.ConfigFileYAML("grave.yml");
+        conf.ConfigFileYAML("armorstand.yml");
         
         
         //---------------------------
@@ -156,13 +161,13 @@ implements Listener
         getCommand("spawn").setExecutor(new Command_Spawn(this));
         getCommand("playerinfo").setExecutor(new Command_PlayerInfo(this));
         getCommand("infobook").setExecutor(new InfoBook());
-        getCommand("home").setExecutor(new Command_Home());
+        getCommand("home").setExecutor(new Command_Home(this));
         getCommand("sethome").setExecutor(new Command_SetHome());
         getCommand("setspawn").setExecutor(new Command_SetSpawn());
         getCommand("border").setExecutor(new Command_Border(this));
         getCommand("grave").setExecutor(new Command_Grave());
         getCommand("portal").setExecutor(new Command_Portal(this));
-        getCommand("lobby").setExecutor(new Command_Lobby());
+        getCommand("lobby").setExecutor(new Command_Lobby(this));
         getCommand("lo").setExecutor(new Command_Login());
         getCommand("delock").setExecutor(new Command_Login());
         getCommand("register").setExecutor(new Command_Login());
@@ -202,6 +207,8 @@ implements Listener
         getCommand("setjail").setExecutor(new Command_SetJail());
         getCommand("lock").setExecutor(new Command_Lock(this));
         getCommand("mf").setExecutor(new Command_MsgFlotant());
+        getCommand("setcrypte").setExecutor(new Command_SetCrype());
+        getCommand("as").setExecutor(new Command_AS());
         
         ConfigWorld.load(this, false);
         namePlates.load();
@@ -235,7 +242,7 @@ implements Listener
     @Override
     public void onDisable()
     {
-        GraveListener.removeInventory();
+        //GraveListener.removeInventory();
         Bukkit.getConsoleSender().sendMessage(formatMsg.format("<red>[Iris] Desactive"));
     }
          
@@ -282,12 +289,33 @@ implements Listener
             @Override
             public void run()
             {
-                p.teleport(loc);
+                if(p.getVehicle() != null){
+                    Entity vehicle = p.getVehicle();
+                    p.eject();
+                    p.teleport(loc);
+                    scheduleTPPassenger(p,vehicle,5,loc);
+                }else{
+                    p.teleport(loc);
+                }
                 endTP(p);
             }
         },ticks);
 
         taskID.put(p.getName(), tid);
+    }
+    
+    public void scheduleTPPassenger(final Player p, Entity vehicle, long ticks, final Location loc)
+    {
+        final int tid = getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                vehicle.teleport(p);
+                vehicle.setPassenger(p);
+                loc.getChunk().load();
+            }
+        },ticks);
     }
 
     public boolean endTP(Player p)
@@ -328,9 +356,9 @@ implements Listener
                 
         ItemStack is3 = new ItemStack(46);
         ItemMeta meta3 = is3.getItemMeta();
-        meta3.setDisplayName(formatMsg.format("<red><gras>TNT Run"));
+        meta3.setDisplayName(formatMsg.format("<red><gras>Shop LOBBY"));
         ArrayList<String> lore3 = new ArrayList();
-        String libelle31 = formatMsg.format("<white><italique>Rejoins TNT Run");
+        String libelle31 = formatMsg.format("<white><italique>Rejoins le Shop au LOBBY");
         lore3.add(0, libelle31);
         meta3.setLore(lore3);
         is3.setItemMeta(meta3);

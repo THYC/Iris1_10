@@ -18,6 +18,7 @@ import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.World;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -31,7 +32,7 @@ public class PortalManager
     private Location locplayer = null;
     private final Economy eco = new Economy();
     HordeManager hordeManager = new HordeManager();
-
+        
     public void playerMoved(Player player)
     {
         locplayer = player.getLocation();
@@ -79,7 +80,19 @@ public class PortalManager
                 }
                 
                 Location portalLoc = new Location(worldInstance, X, Y, Z);
-                player.getPlayer().teleport(portalLoc);
+                portalLoc.setPitch(player.getLocation().getPitch());
+                portalLoc.setYaw(player.getLocation().getYaw());
+                
+                if(player.getVehicle() != null){
+                    Entity vehicle = player.getVehicle();
+                    player.eject();
+                    player.teleport(portalLoc);
+                    
+                    this.scheduleTPPassenger(player,vehicle,3,portalLoc);
+                }else{
+                    player.teleport(portalLoc);
+                }
+                
                 switch(p.mode)
                 {
                     case 1:
@@ -192,7 +205,21 @@ public class PortalManager
                 Iris.log.log(Level.SEVERE, ex.getMessage());
             }
         } 
-    }                
+    } 
+    
+    private void scheduleTPPassenger(final Player p, Entity vehicle, long ticks, final Location loc)
+    {
+        final int id = Iris.plugin.getServer().getScheduler().scheduleSyncDelayedTask(Iris.plugin, new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                vehicle.teleport(p);
+                vehicle.setPassenger(p);
+                loc.getChunk().load();
+            }
+        },ticks);
+    }
 }
 
 

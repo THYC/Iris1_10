@@ -78,8 +78,8 @@ public class Economy
     public double setTransaction(Player Acheteur, OfflinePlayer Vendeur, double achat, String worldName)
     {
         double soldeAcheteur;
-        Iris.log.info(Iris.WorldPVP);
-        Iris.log.info(worldName);
+        //Iris.log.info(Iris.WorldPVP);
+        //Iris.log.info(worldName);
         if (worldName.contains(Iris.WorldPVP))
         {
             soldeAcheteur = conf.getDoubleYAML("userdata",Acheteur.getUniqueId() + ".yml","Horde.banque",0);

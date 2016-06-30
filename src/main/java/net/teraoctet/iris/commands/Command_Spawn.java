@@ -3,6 +3,7 @@ package net.teraoctet.iris.commands;
 import java.util.HashMap;
 import net.teraoctet.iris.Iris;
 import static net.teraoctet.iris.Iris.conf;
+import static net.teraoctet.iris.Iris.cooldowns;
 import static net.teraoctet.iris.Iris.formatMsg;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -18,7 +19,6 @@ implements CommandExecutor
     private final Iris plugin;
     public Player player;
     public World worldInstance;
-    public HashMap<String, Long> cooldowns = new HashMap<>();
     
     public Command_Spawn(Iris instance) 
     {
@@ -29,19 +29,17 @@ implements CommandExecutor
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args)
     {
         player = (Player) sender;
-        if (player.hasPermission("iris.horde") && !player.isOp())
+
+        int cooldownTime = conf.getIntYAML("config.yml","CoolDownTime",60);
+        if(cooldowns.containsKey(player.getDisplayName())) 
         {
-            int cooldownTime = conf.getIntYAML("config.yml","CoolDownTime",120);
-            if(cooldowns.containsKey(player.getDisplayName())) 
-            {
-                long secondsLeft = ((cooldowns.get(player.getDisplayName())/1000)+cooldownTime) - (System.currentTimeMillis()/1000);
-                if(secondsLeft>0) {
-                    player.sendMessage(formatMsg.format("<gray>Vous ne pouvez pas utiliser cette commande avant " + secondsLeft + " secondes!"));
-                    return true;
-                }
+            long secondsLeft = ((cooldowns.get(player.getDisplayName())/1000)+cooldownTime) - (System.currentTimeMillis()/1000);
+            if(secondsLeft>0) {
+                player.sendMessage(formatMsg.format("<gray>Vous ne pouvez pas utiliser cette commande avant " + secondsLeft + " secondes!"));
+                return true;
             }
-            cooldowns.put(player.getDisplayName(), System.currentTimeMillis());
         }
+        cooldowns.put(player.getDisplayName(), System.currentTimeMillis());
         
         String world= player.getLocation().getWorld().getName();
         if (!(sender instanceof Player))
@@ -92,13 +90,14 @@ implements CommandExecutor
                             return true;
                         }
                                                 
-                        player.sendMessage(formatMsg.format("<gray>SPAWN : Vous serez TP dans 20s environ"));
+                        player.sendMessage(formatMsg.format("<gray>SPAWN : Vous serez TP dans 10s environ"));
                         plugin.scheduleTP(player, 200L, worldInstance.getSpawnLocation());
                     }
                     else
                     {
-                        player.teleport(spawn);
-                        player.sendMessage(Iris.formatMsg.format(conf.getStringYAML("messages.yml","cmdSpawn","<dark_aqua>Vous avez demand<e_ai> le spawn ! <smile>"),player));
+                        player.sendMessage(formatMsg.format("<gray>SPAWN : Vous serez TP dans 10s environ"));
+                        plugin.scheduleTP(player, 200L, worldInstance.getSpawnLocation());
+                        //player.sendMessage(Iris.formatMsg.format(conf.getStringYAML("messages.yml","cmdSpawn","<dark_aqua>Vous avez demand<e_ai> le spawn ! <smile>"),player));
                     }
                 }
                 catch(Exception e)

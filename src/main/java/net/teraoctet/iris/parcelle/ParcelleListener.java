@@ -9,6 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.Chest;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
@@ -123,7 +124,6 @@ implements Listener
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK && event.getClickedBlock().getState() instanceof Sign)
         {
             Sign sign = (Sign) event.getClickedBlock().getState();
-            //player.sendMessage(sign.getLine(0));
             if (sign.getLine(0).contains(formatMsg.format("<gras>PARCELLE")))
             {
                 int cout =  Integer.parseInt(sign.getLine(2).substring(6));
@@ -166,25 +166,25 @@ implements Listener
             player.sendMessage(formatMsg.format("<dark_gray>Propriétaire : " + parcelleManager.getParcelleOwnerName(parcelle)));
             player.sendMessage(formatMsg.format("<dark_gray>Habitant : " + parcelleManager.getParcelleAllowedName(parcelle)));
         }
-        if (parcelle != null && !parcelle.getuuidAllowed().contains(player.getUniqueId().toString()) && parcelle.getNoInteract()==1 && !player.isOp())
+         
+        String locChestString = loc.getWorld() + "-" + loc.getBlockX() + "-" + loc.getBlockY() + "-" + loc.getBlockZ();
+        boolean graveExist = conf.IsConfigYAML("grave.yml",locChestString);
+        if (parcelle != null && !parcelle.getuuidAllowed().contains(player.getUniqueId().toString()) && parcelle.getNoInteract()==1 && !player.isOp() && graveExist == false)
         {
+            
             player.sendMessage(formatMsg.format("<light_purple>Cette parcelle est prot<e_ai>g<e_ai>e par un sort magique"));
             event.setCancelled(true);
             return;
         }
         if (player.getItemInHand().getTypeId() == 269)
         {
-            if(event.getAction() == Action.RIGHT_CLICK_BLOCK)
-                
+            if(event.getAction() == Action.RIGHT_CLICK_BLOCK)  
             {
                 ParcelleManager parcelleManager = ParcelleManager.getSett(player);
                 parcelleManager.setBorder(2, loc);
                 player.sendMessage(formatMsg.format("<green>Parcelle angle2 : <white>" + String.format("%d %d %d", new Object[] { loc.getBlockX(), loc.getBlockY(), loc.getBlockZ() })));
                 event.setCancelled(true);
             }
-        } 
-        if (player.getItemInHand().getTypeId() == 269)
-        {
             if(event.getAction() == Action.LEFT_CLICK_BLOCK) 
                 
             {
@@ -230,7 +230,7 @@ implements Listener
                         
                         if(hordeManager.getGrade(player) > 2)
                         {
-                            if (event.getBlock().getTypeId() == 65) return;
+                            if (event.getBlock().getType().equals(Material.LADDER)) return;
                             event.setCancelled(true);
                             player.sendMessage(formatMsg.format("<gray>Désolé ! ton grade ne te permet pas de casser ce bloc"));
                         }
@@ -241,7 +241,7 @@ implements Listener
                     case 2:
                         if(hordeManager.getGrade(player) > 2)
                         {
-                            if (event.getBlock().getTypeId() == 65) return;
+                            if (event.getBlock().getType().equals(Material.LADDER)) return;
                             event.setCancelled(true);
                             player.sendMessage(formatMsg.format("<gray>Désolé ! ton grade ne te permet pas de casser ce bloc"));
                         }
@@ -252,7 +252,7 @@ implements Listener
                     case 3:
                         if(hordeManager.getGrade(player) > 3)
                         {
-                            if (event.getBlock().getTypeId() == 65) return;
+                            if (event.getBlock().getType().equals(Material.LADDER)) return;
                             event.setCancelled(true);
                             player.sendMessage(formatMsg.format("<gray>Désolé ! ton grade ne te permet pas de casser ce bloc"));
                         }
@@ -271,7 +271,7 @@ implements Listener
                         event.setCancelled(true);
                         return;
                     }
-                    if (event.getBlock().getTypeId() == 65 || event.getBlock().getTypeId() == 46 || event.getBlock().getTypeId() == 106) 
+                    if (event.getBlock().getType().equals(Material.LADDER) || event.getBlock().getType().equals(Material.TNT) || event.getBlock().getType().equals(Material.VINE)) 
                     {
                         return;
                     }
@@ -283,7 +283,7 @@ implements Listener
                     event.setCancelled(breakBlock);
                     return;
                 }
-                if (event.getBlock().getTypeId() == 65 || event.getBlock().getTypeId() == 46 || event.getBlock().getTypeId() == 106) return;
+                if (event.getBlock().getType().equals(Material.LADDER) || event.getBlock().getType().equals(Material.TNT) || event.getBlock().getType().equals(Material.VINE)) return;
                 event.setCancelled(true);
                 String perm = "iris.horde.message." + chunk.getHordeName();
                 org.bukkit.Bukkit.broadcast(Iris.formatMsg.format("<red>ALERTE : <gray>Des ennemis sont sur nos terres !"),perm);
@@ -324,7 +324,7 @@ implements Listener
                     case 1:
                         if(hordeManager.getGrade(player) > 2)
                         {
-                            if (event.getBlock().getTypeId() == 65) return;
+                            if (event.getBlock().getType().equals(Material.LADDER)) return;
                             event.setCancelled(true);
                             player.sendMessage(formatMsg.format("<gray>Désolé ! ton grade ne te permet pas de construire ici"));
                         }
@@ -335,7 +335,7 @@ implements Listener
                     case 2:
                         if(hordeManager.getGrade(player) > 2)
                         {
-                            if (event.getBlock().getTypeId() == 65) return;
+                            if (event.getBlock().getType().equals(Material.LADDER)) return;
                             event.setCancelled(true);
                             player.sendMessage(formatMsg.format("<gray>Désolé ! ton grade ne te permet pas de construire ici"));
                         }
@@ -346,7 +346,7 @@ implements Listener
                     case 3:
                         if(hordeManager.getGrade(player) > 3)
                         {
-                            if (event.getBlock().getTypeId() == 65) return;
+                            if (event.getBlock().getType().equals(Material.LADDER)) return;
                             event.setCancelled(true);
                             player.sendMessage(formatMsg.format("<gray>Désolé ! ton grade ne te permet pas de construire ici"));
                         }
@@ -358,7 +358,7 @@ implements Listener
             }
             else
             {
-                if (event.getBlock().getTypeId() == 65 || event.getBlock().getTypeId() == 46 || event.getBlock().getTypeId() == 106) return;
+                if (event.getBlock().getType().equals(Material.LADDER) || event.getBlock().getType().equals(Material.TNT) || event.getBlock().getType().equals(Material.VINE)) return;
                 event.setCancelled(true);
                 String perm = "iris.horde.message." + chunk.getHordeName();
                 org.bukkit.Bukkit.broadcast(Iris.formatMsg.format("<red>ALERTE : <gray>Des ennemis sont sur nos terres !"),perm);
@@ -703,21 +703,25 @@ implements Listener
                 
                 if(event.getDamager() instanceof org.bukkit.entity.Arrow)
                 {
-                    player = (Player)((Arrow)event.getDamager()).getShooter();
-                    if(player == null) return;
-                    if(!parcelle.getuuidAllowed().equals(player.getUniqueId().toString()))
-                    {
-                        event.setDamage(event.getDamage()* 0.5);
+                    if(((Arrow)event.getDamager()).getShooter() instanceof org.bukkit.entity.Player){
+                        player = (Player)((Arrow)event.getDamager()).getShooter();
+                        if(player == null) return;
+                        if(!parcelle.getuuidAllowed().equals(player.getUniqueId().toString()))
+                        {
+                            event.setDamage(event.getDamage()* 0.5);
+                        }
                     }
                 }
                 
                 if(event.getDamager() instanceof org.bukkit.entity.Projectile)
                 {
-                    player = (Player)((Projectile)event.getDamager()).getShooter();
-                    if(player == null) return;
-                    if(!parcelle.getuuidAllowed().equals(player.getUniqueId().toString()))
-                    {
-                        event.setDamage(event.getDamage()* 0.5);
+                    if(((Projectile)event.getDamager()).getShooter() instanceof org.bukkit.entity.Player){
+                        player = (Player)((Projectile)event.getDamager()).getShooter();
+                        if(player == null) return;
+                        if(!parcelle.getuuidAllowed().equals(player.getUniqueId().toString()))
+                        {
+                            event.setDamage(event.getDamage()* 0.5);
+                        }
                     }
                 }
                 if(event.getDamager() instanceof org.bukkit.entity.Player)
@@ -734,6 +738,42 @@ implements Listener
             }
         }
     }
+    
+    @EventHandler
+    public void onDamageAsIf(EntityDamageByEntityEvent event) 
+    {
+        Player player;
+        Parcelle parcelle = parcelleManager.getParcelle(event.getEntity().getLocation());
+
+        if (parcelle != null)
+        {
+            if(event.getEntity() instanceof org.bukkit.entity.ArmorStand
+                    || event.getEntity() instanceof org.bukkit.entity.ItemFrame)
+            {     
+                if(event.getDamager() instanceof org.bukkit.entity.Arrow)
+                {
+                    player = (Player)((Arrow)event.getDamager()).getShooter();
+                    if(player == null) return;                    
+                    if (!parcelle.getuuidAllowed().contains(player.getUniqueId().toString())) event.setCancelled(true);
+                }
+                if(event.getDamager() instanceof org.bukkit.entity.Projectile)
+                {
+                    if (((Projectile)event.getDamager()).getShooter() instanceof Player) 
+                    {
+                        player = (Player)((Projectile)event.getDamager()).getShooter();
+                        if(player == null) return;
+                        if (!parcelle.getuuidAllowed().contains(player.getUniqueId().toString()))event.setCancelled(true);
+                    }
+                }
+                if(event.getDamager() instanceof org.bukkit.entity.Player)
+                {
+                    player = (Player)((Player)event.getDamager());
+                    if(player == null) return;
+                    if (!parcelle.getuuidAllowed().contains(player.getUniqueId().toString()))event.setCancelled(true);
+                }
+            }
+        }
+    }
         
     @EventHandler
     public void onCreatureSpawn(CreatureSpawnEvent event)
@@ -745,6 +785,20 @@ implements Listener
             {
                 if(event.getEntity() instanceof org.bukkit.entity.Villager || event.getEntity() instanceof org.bukkit.entity.Animals 
                         || event.getEntity() instanceof org.bukkit.entity.PigZombie)
+                {     
+                
+                }
+                else
+                {
+                    event.setCancelled(true);
+                }
+            }
+            
+            if (parcelle.getNoMob() == 2)
+            {
+                if(event.getEntity() instanceof org.bukkit.entity.Villager || event.getEntity() instanceof org.bukkit.entity.ArmorStand 
+                        || event.getEntity() instanceof org.bukkit.entity.Arrow || event.getEntity() instanceof org.bukkit.entity.PigZombie
+                        || event.getEntity() instanceof org.bukkit.entity.Bat || event.getEntity() instanceof org.bukkit.entity.WaterMob)
                 {     
                 
                 }

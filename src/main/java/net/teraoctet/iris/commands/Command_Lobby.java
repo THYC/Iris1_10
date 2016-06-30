@@ -2,6 +2,7 @@ package net.teraoctet.iris.commands;
 
 import net.teraoctet.iris.utils.ConfigFile;
 import net.teraoctet.iris.Iris;
+import static net.teraoctet.iris.Iris.formatMsg;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -13,7 +14,13 @@ import org.bukkit.entity.Player;
 public class Command_Lobby 
 implements CommandExecutor
 {
+    private final Iris plugin;
     private static final ConfigFile conf = new ConfigFile();
+    
+    public Command_Lobby(Iris instance) 
+    {
+        plugin = instance;
+    }
     
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args)
@@ -42,8 +49,10 @@ implements CommandExecutor
 
                     World worldInstance = Bukkit.getWorld(world);
                     Location location = new Location(worldInstance, X, Y, Z);
-                    player.teleport(location);
-                    player.sendMessage(Iris.formatMsg.format(conf.getStringYAML("messages.yml","cmdLobby","<dark_aqua>Bienvenue au LOBBY Teraoctet !"),player));
+                    player.sendMessage(formatMsg.format("<gray>LOBBY : Vous serez TP dans 10s environ sinon prenez le portail"));
+                    plugin.scheduleTP(player, 200L, location);
+                    //player.teleport(location);
+                    //player.sendMessage(Iris.formatMsg.format(conf.getStringYAML("messages.yml","cmdLobby","<dark_aqua>Bienvenue au LOBBY Teraoctet !"),player));
                 }
                 catch(Exception e)
                 {

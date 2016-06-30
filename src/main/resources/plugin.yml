@@ -2,6 +2,12 @@ name: Iris
 version: 1.0
 main: net.teraoctet.iris.Iris
 commands:
+  as:
+    description: ArmorStand.
+    usage: /<command>
+  setcrypte:
+    description: definit le spawn de la crypte.
+    usage: /<command>
   pos:
     description: Affiche votre position ou vous téléporte à une autre.
     usage: /<command>
@@ -487,6 +493,9 @@ permissions:
       description: enregistre un commerce public
       default: op
     iris.print:
+      description:
+      default: op
+    iris.crypte:
       description:
       default: op
     iris.give:

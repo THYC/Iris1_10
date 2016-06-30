@@ -13,16 +13,13 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Animals;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerPortalEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
@@ -116,28 +113,7 @@ implements Listener
             Bukkit.broadcast(ex.getLocalizedMessage(), "iris.debug");
         }
     }
-  
-    /*@EventHandler(priority=EventPriority.HIGH)
-    public void pvp(EntityDamageByEntityEvent e)
-    {
-        if (((e.getDamager() instanceof Player)) && ((e.getEntity() instanceof Player)))
-        {
-            Iworld w = new Iworld(e.getEntity().getWorld());
-            if (w.isFlagDenied(Iworld.WorldFlag.PVP)) 
-            {
-                e.setCancelled(true);
-            }
-        }
-        if(e.getEntity() instanceof org.bukkit.entity.Player)
-        {   
-            if(e.getDamager() instanceof org.bukkit.entity.Projectile)
-            {
-                Entity player = (Entity)((Projectile)e.getDamager()).getShooter();
-                if(player instanceof org.bukkit.entity.Player) e.setCancelled(true);
-            }
-        }
-    }*/
-    
+      
     @EventHandler(priority=EventPriority.NORMAL)
     public void onPlayerChangeWorld(PlayerChangedWorldEvent event) throws SQLException
     {
@@ -147,24 +123,17 @@ implements Listener
             String ToWorld = event.getPlayer().getWorld().getName();
             Player player = event.getPlayer();
 
-            String FromWorldInv = conf.getStringYAML("MultiInventory.yml", FromWorld,"NULL");
-            String ToWorldInv = conf.getStringYAML("MultiInventory.yml", ToWorld,"NULL");
-
-            if(!FromWorldInv.equals(ToWorldInv) || FromWorldInv.equals("NULL") || ToWorldInv.equals("NULL"))
-            {  
-                invent.SaveInventory(player, FromWorldInv);
-                invent.LoadInventory(player, ToWorldInv);
-                player.setGameMode(GameMode.getByValue(conf.getIntYAML("world.yml", "worlds." + ToWorld + ".GAMEMODE", 0)));
-                if(conf.getIntYAML("world.yml", "worlds." + ToWorld + ".GAMEMODE", 0) == 0)
-                {
-                    player.setFlying(false);
-                    player.setAllowFlight(false);
-                }
-            }
-            else
+            String FromWorldInv = conf.getStringYAML("MultiInventory.yml", FromWorld,FromWorld);
+            String ToWorldInv = conf.getStringYAML("MultiInventory.yml", ToWorld,ToWorld);
+ 
+            invent.SaveInventory(player, FromWorldInv);
+            invent.LoadInventory(player, ToWorldInv);
+            player.setGameMode(GameMode.getByValue(conf.getIntYAML("world.yml", "worlds." + ToWorld + ".GAMEMODE", 0)));
+            if(conf.getIntYAML("world.yml", "worlds." + ToWorld + ".GAMEMODE", 0) == 0)
             {
-                Iris.log.info("[Iris] Fichier MultiInventory.yml non configur<e_ai>");
-            }  
+                player.setFlying(false);
+                player.setAllowFlight(false);
+            }
         }
         catch(SQLException ex)
         {

@@ -26,6 +26,7 @@ implements CommandExecutor
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args)
     {
         Player player = (Player)sender;
+        ParcelleManager parcelleManager = ParcelleManager.getSett(player);
         if (!(sender instanceof Player))
         {
             sender.sendMessage(formatMsg.format(conf.getStringYAML("messages.yml","cmdWarpNoPlayer","<dark_aqua>Commande r<e_ai>serv<e_ai> aux joueurs"),player));
@@ -83,8 +84,13 @@ implements CommandExecutor
                         return true;
                     }
 
-                    ParcelleManager parcelleManager = ParcelleManager.getSett(player);
-                    Location[] locs = null;
+                    Location[] locs = {parcelleManager.getBorder1(), parcelleManager.getBorder2()};
+                    if ((locs[0] == null) || (locs[1] == null))
+                    {
+                        player.sendMessage(formatMsg.format("<green>Vous n'avez pas d<e_ai>fini la bordure"));
+                        player.sendMessage(formatMsg.format("<green>Vous pouvez d<e_ai>finir la bordure en utilisant la pelle en bois"));
+                        return true;
+                    }
                     locs[0] = parcelleManager.getBorder1();
                     locs[1] = parcelleManager.getBorder2();
                     
@@ -178,8 +184,14 @@ implements CommandExecutor
 
                 if (args[0].equalsIgnoreCase("loc") && args.length == 2) 
                 {                        
-                    ParcelleManager parcelleManager = ParcelleManager.getSett(player);
-                    Location[] locs = null;
+
+                    Location[] locs = {parcelleManager.getBorder1(), parcelleManager.getBorder2()};
+                    if ((locs[0] == null) || (locs[1] == null))
+                    {
+                        player.sendMessage(formatMsg.format("<green>Vous n'avez pas d<e_ai>fini la bordure"));
+                        player.sendMessage(formatMsg.format("<green>Vous pouvez d<e_ai>finir la bordure en utilisant la pelle en bois"));
+                        return true;
+                    }
                     locs[0] = parcelleManager.getBorder1();
                     locs[1] = parcelleManager.getBorder2();
 
