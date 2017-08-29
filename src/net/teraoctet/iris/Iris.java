@@ -170,7 +170,6 @@ implements Listener
         getCommand("delock").setExecutor(new Command_Login());
         getCommand("register").setExecutor(new Command_Login());
         getCommand("passchange").setExecutor(new Command_Login());
-        getCommand("am").setExecutor(new Command_AutoMessage(this));
         getCommand("test").setExecutor(new Command_Test(this));
         getCommand("scoreboard").setExecutor(new Command_Test(this));
         getCommand("tpa").setExecutor(new Command_TPA(this));

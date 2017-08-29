@@ -171,19 +171,6 @@ commands:
     description: test
   scoreboard:
     description: test
-  am:
-    description: gestion AutoMessage
-    usage: |
-           /<command> add [NomDuGroupeMessage] [N°deLigne] [Message] - ajoute une ligne de message
-           /<command> addgroupe [NomDuGroupeMessage] [permission] [actif] - ajoute un groupe/entête de message
-           /<command> update [NomDuGroupeMessage] [N°deLigne] [Message] - met à ajour une ligne de message
-           /<command> del [NomDuGroupeMessage] - supprime la totalité du groupe de message
-           /<command> list - liste les groupes de messages
-           /<command> list [NomDuGroupeMessage] - liste le contenu du groupe de message
-           /<command> off [NomDuGroupeMessage] - désactive le groupe de message
-           /<command> on [NomDuGroupeMessage] - active le groupe de message
-           /<command> run - démarre MessageAuto
-           /<command> stop - stop MessageAuto
   portal:
     description: administration des portails
     aliases: [p]
@@ -446,10 +433,6 @@ permissions:
     iris.portal.tp:
       description: teleporte
       default: true
-    iris.automessage.admin:
-      description: administration automessage
-    iris.automessage.receive:
-      default: op
     iris.tpa:
       description: teleporte
       default: true
